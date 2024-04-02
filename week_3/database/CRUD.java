@@ -7,5 +7,5 @@ public interface CRUD {
     public List<Object> read(Object object);
     public boolean update(Object object);
     public boolean delete(Object object);
-    public Object find(int id);
+    public Object findById(int id);
 }

@@ -27,7 +27,7 @@ public class AppointmentModel implements CRUD {
     }
 
     @Override
-    public Object find(int id) {
+    public Object findById(int id) {
         return null;
     }
 }

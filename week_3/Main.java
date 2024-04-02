@@ -36,7 +36,7 @@ public class Main {
 
         PatientController objPatientController = new PatientController();
 
-        Object[] optionsMenu = {"Manage Patients","Manage Doctors","Manage Appointments","Manage Specialities"};
+        Object[] optionsMenu = {"Manage Patients","Manage Doctors","Manage Appointments","Manage Specialities","Exit"};
         Object seleccion;
 
         do{
@@ -66,19 +66,30 @@ public class Main {
                                 objPatientController.create();
                                 break;
                             case "List Patients":
-                                objPatientController.create();
+                                objPatientController.getAll();
                                 break;
                             case "Update Patient":
-                                objPatientController.create();
+                                objPatientController.update();
                                 break;
                             case "Delete Patient":
-                                objPatientController.create();
+                                objPatientController.delete();
                                 break;
                         }
-                    }while(!Objects.equals(seleccion,null));
+                    }while(!Objects.equals(seleccion,"Exit") || seleccion == null);
                     break;
-            }
-        }while(!Objects.equals(seleccion, null));
+                case "Manage Doctors":
+                    Object[] optionsDoctors = { "Create Doctor","List Doctor","Update Doctor","Delete Doctor","Exit"};
+                    seleccion = JOptionPane.showInputDialog(
+                            new JFrame(),
+                            "Select an option: ",
+                            "Patients",
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            optionsDoctors,
+                            optionsDoctors[0]);
+                    break;
 
+            }
+        }while(!Objects.equals(seleccion, "Exit"));
     }
 }
