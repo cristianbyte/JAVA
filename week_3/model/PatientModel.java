@@ -11,7 +11,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+/*CREATE TABLE patients(
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+name varchar(40) NOT NULL,
+last_name varchar(40) NOT NULL,
+birth_date DATE NOT NULL,
+identity varchar(40) NOT NULL
+);*/
 public class PatientModel implements CRUD {
 
     public List<Object> findAll() {
@@ -94,13 +100,7 @@ public class PatientModel implements CRUD {
         Connection objConnection = ConfigDB.openConnection();
         Patient objPatient = (Patient) object;
         boolean isUpdated = false;
-            /*CREATE TABLE patients(
-        id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-        name varchar(40) NOT NULL,
-        last_name varchar(40) NOT NULL,
-        birth_date DATE NOT NULL,
-        identity varchar(40) NOT NULL
-        );*/
+
         try{
             String sql = "UPDATE patients SET name = ?, last_name = ?, birth_date = ?, identity = ? WHERE id = ?;";
             PreparedStatement objPrepared = objConnection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
