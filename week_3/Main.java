@@ -8,18 +8,6 @@ import entity.Doctor;
 
 import javax.swing.*;
 import java.util.Objects;
-/*
-CREATE TABLE appointments(
-id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-date_appointment DATE NOT NULL,
-time_oppointment TIME NOT NULL,
-reason varchar(40) NOT NULL,
-id_patient int NOT NULL,
-FOREIGN KEY (id_patient) REFERENCES patients(id),
-id_doctor int NOT NULL,
-FOREIGN KEY (id_doctor) REFERENCES doctors(id)
-);
-* */
 
 public class Main {
     public static void main(String[] args) {
@@ -153,16 +141,16 @@ public class Main {
                         }
                         switch ((String) seleccion){
                             case "Create Appointments":
-                                //objAppointmentController.create();
+                                objAppointmentController.create();
                                 break;
                             case "List Appointments":
                                 objAppointmentController.getAll();
                                 break;
                             case "Update Appointments":
-                                //objAppointmentController.update();
+                                objAppointmentController.update();
                                 break;
                             case "Delete Appointments":
-                                //objAppointmentController.delete();
+                                objAppointmentController.delete();
                                 break;
                         }
                     }while(!Objects.equals(seleccion,"Exit"));

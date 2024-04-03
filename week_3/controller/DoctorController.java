@@ -8,6 +8,8 @@ import controller.SpecialtyController;
 import javax.swing.*;
 import java.util.List;
 
+import static java.lang.StringTemplate.STR;
+
 public class DoctorController {
 
     DoctorModel objDoctorModel = new DoctorModel();

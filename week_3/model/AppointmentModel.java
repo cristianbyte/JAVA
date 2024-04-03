@@ -15,10 +15,9 @@ import java.util.List;
 public class AppointmentModel implements CRUD {
     @Override
     public Object create(Object object) {
+        JOptionPane.showMessageDialog(null,object.toString());
         Connection objConnection = ConfigDB.openConnection();
         Appointment appointment = (Appointment) object;
-
-
 
         try {
             String sql = "INSERT INTO appointments (date_appointment,time_appointment,reason,id_patient,id_doctor) VALUES (?,?,?,?,?);";
