@@ -26,12 +26,7 @@ public class PassengerController {
         objPassenger.setName(name);
         String lastName = creatingQuestion("Last Name: ","Creating Patient");
         objPassenger.setLast_name(lastName);
-        String birth_date = JOptionPane.showInputDialog("Enter your date of birth: yyyy-mm-dd");
-        while (!birth_date.matches("\\d{4}-\\d{2}-\\d{2}")) {
-            birth_date = JOptionPane.showInputDialog("Please enter a valid date: yyyy-mm-dd");
-        }
-        objPassenger.setBirth_date(birth_date);
-        //ALL EYES ON ME! ↓↓↓↓↓↓ Be careful ↓↓↓↓↓↓
+
         String identity = JOptionPane.showInputDialog("Enter your identity: ");
         while (!identity.matches("\\d+")) {
             identity = JOptionPane.showInputDialog("Please enter a valid number:");
@@ -69,10 +64,6 @@ public class PassengerController {
         }else{
             String name = JOptionPane.showInputDialog(null,"Enter patient name:", objPassenger.getName());
             String lastName = JOptionPane.showInputDialog(null, "Enter patient last name:", objPassenger.getLast_name());
-            String birth_date = JOptionPane.showInputDialog(null,"Enter birth date's patient:", objPassenger.getBirth_date());
-            while (!birth_date.matches("\\d{4}-\\d{2}-\\d{2}")) {
-                birth_date = JOptionPane.showInputDialog(null,"Please enter a valid date: yyyy-mm-dd");
-            }
 
             String identity = JOptionPane.showInputDialog(null,"Enter patient identity:", objPassenger.getIdentity());
             while (!identity.matches("\\d+")) {
@@ -81,7 +72,6 @@ public class PassengerController {
 
             objPassenger.setName(name);
             objPassenger.setLast_name(lastName);
-            objPassenger.setBirth_date(birth_date);
             objPassenger.setIdentity(identity);
 
             this.objPatientModel.update(objPassenger);

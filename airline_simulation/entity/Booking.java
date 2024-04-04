@@ -1,9 +1,21 @@
 package entity;
 
 public class Booking {
-
+    /*
+CREATE TABLE bookings(
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+date_booking DATE NOT NULL,
+time_booking TIME NOT NULL,
+reason varchar(40) NOT NULL,
+id_patient int NOT NULL,
+FOREIGN KEY (id_patient) REFERENCES patients(id),
+id_doctor int NOT NULL,
+FOREIGN KEY (id_doctor) REFERENCES doctors(id)
+);
+* */
     private int id;
     private String booking_date;
+    private String booking_time;
     private String seat;
     private int id_passenger;
     private int id_flight;

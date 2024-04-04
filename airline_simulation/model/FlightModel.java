@@ -16,6 +16,48 @@ import java.util.List;
 public class FlightModel implements CRUD {
 
     AirplaneModel objAM = new AirplaneModel();
+    /*CREATE TABLE flights(
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+destination varchar(40) NOT NULL,
+departure_date DATE  NOT NULL,
+departure_time TIME NOT NULL,
+INT NOT NULL,
+FOREIGN KEY (id_airplane) REFERENCES airplanes(id)
+);
+*/
+    public List<Object> listAirplanesAvailable(String date) {
+        Connection objConnection = null;
+        List<Object> listAirplanes = new ArrayList<>();
+
+        try {
+            objConnection = ConfigDB.openConnection();
+            String sql = "SELECT * FROM airplanes LEFT JOIN flights ON airplanes.id = flights.id_airplane AND flights.departure_date != ?";
+            PreparedStatement objPreparedStatement = objConnection.prepareStatement(sql);
+            objPreparedStatement.setString(1, date);
+            ResultSet objResult = objPreparedStatement.executeQuery();
+
+            while (objResult.next()) {
+                Airplane objAirplane = new Airplane();
+                objAirplane.setId(objResult.getInt("airplanes.id"));
+                objAirplane.setModel(objResult.getString("airplanes.model"));
+                objAirplane.setCapacity(objResult.getInt("airplanes.capacity"));
+                listAirplanes.add(objAirplane);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (objConnection != null) {
+                try {
+                    objConnection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return listAirplanes;
+    }
 
     @Override
     public Object create(Object object) {
@@ -62,13 +104,14 @@ public class FlightModel implements CRUD {
         boolean isUpdated = false;
 
         try{
-            String sql = "UPDATE flight SET name = ?, last_name = ?, id_specialty = ? WHERE id = ?;";
+            String sql = "UPDATE flight SET destination = ?, departure_date = ?, departure_time = ?, id_airplane = ? WHERE id = ?;";
             PreparedStatement objPrepared = objConnection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
-            objPrepared.setString(1, objFlight.getName());
-            objPrepared.setString(2, objFlight.getLast_name());
-            objPrepared.setInt(3, objFlight.getId_specialty());
+            objPrepared.setString(1, objFlight.getDestination());
+            objPrepared.setString(2, objFlight.getDeparture_date());
+            objPrepared.setString(3, objFlight.getDeparture_time());
+            objPrepared.setInt(4, objFlight.getId_airplane());
 
-            objPrepared.setInt(4, objFlight.getId());
+            objPrepared.setInt(5, objFlight.getId());
 
             int rowAffected = objPrepared.executeUpdate();
 
@@ -137,9 +180,10 @@ public class FlightModel implements CRUD {
             while (objResult.next()){
                 objFlight = new Flight();
                 objFlight.setId(objResult.getInt("id"));
-                objFlight.setName(objResult.getString("name"));
-                objFlight.setLast_name(objResult.getString("last_name"));
-                objFlight.setId_specialty(objResult.getInt("id_specialty"));
+                objFlight.setDestination(objResult.getString("destination"));
+                objFlight.setDeparture_date(objResult.getString("departure_date"));
+                objFlight.setDeparture_time(objResult.getString("departure_time"));
+                objFlight.setId_airplane(objResult.getInt("id_airplane"));
             }
 
         }catch (Exception e){
@@ -152,14 +196,6 @@ public class FlightModel implements CRUD {
     }
 
     public List<Object> findAll() {
-            /*CREATE TABLE flights(
-        id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-        destination varchar(40) NOT NULL,
-        departure_date DATE  NOT NULL,
-        departure_time TIME NOT NULL,
-        id_airplane INT NOT NULL,
-        FOREIGN KEY (id_airplane) REFERENCES airplanes(id)
-        );*/
         //1. Open connection
         Connection objConnection = ConfigDB.openConnection();
         //2. Initialize a list to save data.

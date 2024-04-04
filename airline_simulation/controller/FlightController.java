@@ -1,11 +1,11 @@
 package controller;
 
-import entity.Airplane;
 import entity.Flight;
 import model.FlightModel;
 import model.AirplaneModel;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.StringTemplate.STR;
@@ -34,6 +34,25 @@ public class FlightController {
         );
     }
 
+    private List<Flight> getAvailableAirplanes(String date){
+        List<Flight> listFlights = null;
+        List<Object> allFlights = objFlightModel.findAll();
+        if(allFlights != null){
+            listFlights = new ArrayList<>();
+            for(Object objF : objFlightModel.findAll()){
+                Flight objFlight = (Flight) objF;
+                if (!objFlight.getDeparture_date().equals(date)) {
+                    listFlights.add(objFlight);
+                }
+            }
+        }
+        return  listFlights;
+    }
+/*        for(Object obj : listObject){
+            Flight objFlight = (Flight) obj;
+            list.append(objFlight.toString(true)).append("\n");
+        }*/
+
     public void create() {
 
         Flight objFlight = new Flight();
@@ -41,10 +60,14 @@ public class FlightController {
         String destination = creatingQuestion("Destination: ","Creating Flight");
         objFlight.setDestination(destination);
         String departure_date = creatingQuestion("Departure Date: yyyy-mm-dd","Creating Flight");
+        while (!departure_date.matches("\\d{4}-\\d{2}-\\d{2}")) {
+            departure_date = JOptionPane.showInputDialog("Please enter a valid date: yyyy-mm-dd");
+        }
         objFlight.setDeparture_date(departure_date);
         String departure_time = creatingQuestion("Departure Time: hh:mm:ss","Creating Flight");
         objFlight.setDeparture_time(departure_time);
-        int id_airplane = Integer.parseInt(JOptionPane.showInputDialog(null, STR."Airplanes:  \n \{objAirplaneController.getAll((objAM.findAll()))} \nSelect the Airplane's ID:"));
+
+        int id_airplane = Integer.parseInt(JOptionPane.showInputDialog(null, STR."Airplanes avaliables:  \n\{this.getAll(objFlightModel.listAirplanesAvailable(departure_date))} \nSelect the Airplane's ID:"));
         objFlight.setId_airplane(id_airplane);
 
         objFlight = (Flight) this.objFlightModel.create(objFlight);
@@ -58,11 +81,10 @@ public class FlightController {
     }
 
     public String getAll(List listObject){
-        StringBuilder list = new StringBuilder("List Flights: \n");
+        StringBuilder list = new StringBuilder("List: \n");
         for(Object obj : listObject){
             Flight objFlight = (Flight) obj;
-
-            list.append(objFlight.toString()).append("\n");
+            list.append(objFlight.toString(true)).append("\n");
         }
         return list.toString();
     }

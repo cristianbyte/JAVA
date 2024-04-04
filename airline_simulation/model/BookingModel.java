@@ -12,6 +12,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+CREATE TABLE bookings(
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+booking_date DATE NOT NULL,
+seat varchar(40) NOT NULL,
+id_passenger int NOT NULL,
+FOREIGN KEY (id_passenger) REFERENCES passengers(id),
+id_flight int NOT NULL,
+FOREIGN KEY (id_flight) REFERENCES flights(id)
+);*/
+
 public class BookingModel implements CRUD {
     @Override
     public Object create(Object object) {
@@ -20,10 +31,10 @@ public class BookingModel implements CRUD {
         Booking booking = (Booking) object;
 
         try {
-            String sql = "INSERT INTO bookings (date_booking,time_booking,reason,id_patient,id_doctor) VALUES (?,?,?,?,?);";
+            String sql = "INSERT INTO bookings (booking_date,seat,id_passenger,id_flight) VALUES (?,?,?,?);";
             PreparedStatement objPrepare = (PreparedStatement) objConnection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
-            objPrepare.setString(1, booking.getDate_booking());
-            objPrepare.setString(2, booking.getTime_booking());
+            objPrepare.setString(1, booking.getBooking_date());
+            objPrepare.setString(2, booking.get());
             objPrepare.setString(3, booking.getReason());
             objPrepare.setInt(4, booking.getId_patient());
             objPrepare.setInt(5, booking.getId_doctor());
@@ -132,18 +143,7 @@ public class BookingModel implements CRUD {
             objPrepare.setInt(1,id);
             //5. execute
             ResultSet objResult = objPrepare.executeQuery();
-            /*
-        CREATE TABLE bookings(
-        id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-        date_booking DATE NOT NULL,
-        time_booking TIME NOT NULL,
-        reason varchar(40) NOT NULL,
-        id_patient int NOT NULL,
-        FOREIGN KEY (id_patient) REFERENCES patients(id),
-        id_doctor int NOT NULL,
-        FOREIGN KEY (id_doctor) REFERENCES doctors(id)
-        );
-        * */
+
             while (objResult.next()){
                 objBooking = new Booking();
                 objBooking.setId(objResult.getInt("id"));
