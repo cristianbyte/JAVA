@@ -1,26 +1,22 @@
 package entity;
 
 public class Booking {
-    /*
-CREATE TABLE bookings(
+/*CREATE TABLE bookings(
 id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-date_booking DATE NOT NULL,
-time_booking TIME NOT NULL,
-reason varchar(40) NOT NULL,
-id_patient int NOT NULL,
-FOREIGN KEY (id_patient) REFERENCES patients(id),
-id_doctor int NOT NULL,
-FOREIGN KEY (id_doctor) REFERENCES doctors(id)
-);
-* */
+booking_date DATE NOT NULL,
+seat varchar(40) NOT NULL,
+id_passenger int NOT NULL,
+FOREIGN KEY (id_passenger) REFERENCES passengers(id),
+id_flight int NOT NULL,
+FOREIGN KEY (id_flight) REFERENCES flights(id)
+);*/
     private int id;
     private String booking_date;
-    private String booking_time;
     private String seat;
     private int id_passenger;
     private int id_flight;
     private String name_passenger;
-    private String model_flight;
+    private String destination;
 
     public Booking() {}
 
@@ -72,30 +68,29 @@ FOREIGN KEY (id_doctor) REFERENCES doctors(id)
         this.name_passenger = name_passenger;
     }
 
-    public String getModel_flight() {
-        return model_flight;
+    public String getDestination() {
+        return destination;
     }
 
-    public void setModel_flight(String model_flight) {
-        this.model_flight = model_flight;
+    public void setDestination(String destination) {
+        this.destination = destination;
     }
 
-    public Booking(int id, String booking_date, String seat, int id_passenger, int id_flight, String name_passenger, String model_flight) {
+    public Booking(int id, String booking_date, String seat, int id_passenger, int id_flight, String name_passenger) {
         this.id = id;
         this.booking_date = booking_date;
         this.seat = seat;
         this.id_passenger = id_passenger;
         this.id_flight = id_flight;
         this.name_passenger = name_passenger;
-        this.model_flight = model_flight;
     }
 
     @Override
     public String toString() {
-        return STR."Booking{id=\{id}, booking_date='\{booking_date}\{'\''}, seat='\{seat}\{'\''}, id_passenger=\{id_passenger}, id_flight=\{id_flight}, name_passenger='\{name_passenger}\{'\''}, model_flight='\{model_flight}\{'\''}\{'}'}";
+        return STR."Booking{id=\{id}, booking_date='\{booking_date}\{'\''}, seat='\{seat}\{'\''}, id_passenger=\{id_passenger}, id_flight=\{id_flight}, name_passenger='\{name_passenger}\{'\''}";
     }
 
     public String toString(boolean names) {
-        return STR."Booking{id=\{id}, booking_date='\{booking_date}\{'\''}, seat='\{seat}\{'\''}\{names ? STR.", name_passenger='\{name_passenger}\{'\''}, model_flight='\{model_flight}\{'\''}" : STR.", id_passenger=\{id_passenger}, id_flight=\{id_flight}"}\{'}'}";
+        return STR."Booking{id=\{id}, booking_date='\{booking_date}\{'\''}, seat='\{seat}\{'\''}\{names ? STR.", name_passenger='\{name_passenger}\{'\''}, destination='\{destination}\{'\''}" : STR.", id_passenger=\{id_passenger}, id_flight=\{id_flight}"}\{'}'}";
     }
 }

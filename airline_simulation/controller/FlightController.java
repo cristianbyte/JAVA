@@ -34,20 +34,7 @@ public class FlightController {
         );
     }
 
-    private List<Flight> getAvailableAirplanes(String date){
-        List<Flight> listFlights = null;
-        List<Object> allFlights = objFlightModel.findAll();
-        if(allFlights != null){
-            listFlights = new ArrayList<>();
-            for(Object objF : objFlightModel.findAll()){
-                Flight objFlight = (Flight) objF;
-                if (!objFlight.getDeparture_date().equals(date)) {
-                    listFlights.add(objFlight);
-                }
-            }
-        }
-        return  listFlights;
-    }
+
 /*        for(Object obj : listObject){
             Flight objFlight = (Flight) obj;
             list.append(objFlight.toString(true)).append("\n");

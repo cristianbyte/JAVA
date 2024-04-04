@@ -1,8 +1,12 @@
 package model;
 
+import controller.FlightController;
+import controller.PassengerController;
 import database.CRUD;
 import database.ConfigDB;
 import entity.Booking;
+import entity.Flight;
+import entity.Passenger;
 
 import javax.swing.*;
 import java.sql.Connection;
@@ -12,32 +16,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
-CREATE TABLE bookings(
-id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-booking_date DATE NOT NULL,
-seat varchar(40) NOT NULL,
-id_passenger int NOT NULL,
-FOREIGN KEY (id_passenger) REFERENCES passengers(id),
-id_flight int NOT NULL,
-FOREIGN KEY (id_flight) REFERENCES flights(id)
-);*/
-
 public class BookingModel implements CRUD {
     @Override
     public Object create(Object object) {
         JOptionPane.showMessageDialog(null,object.toString());
         Connection objConnection = ConfigDB.openConnection();
+
         Booking booking = (Booking) object;
 
         try {
             String sql = "INSERT INTO bookings (booking_date,seat,id_passenger,id_flight) VALUES (?,?,?,?);";
             PreparedStatement objPrepare = (PreparedStatement) objConnection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
             objPrepare.setString(1, booking.getBooking_date());
-            objPrepare.setString(2, booking.get());
-            objPrepare.setString(3, booking.getReason());
-            objPrepare.setInt(4, booking.getId_patient());
-            objPrepare.setInt(5, booking.getId_doctor());
+            objPrepare.setString(2, booking.getSeat());
+            objPrepare.setInt(3, booking.getId_passenger());
+            objPrepare.setInt(4, booking.getId_flight());
 
             objPrepare.execute();
 
@@ -70,15 +63,14 @@ public class BookingModel implements CRUD {
         boolean isUpdated = false;
 
         try{
-            String sql = "UPDATE bookings SET date_booking = ? , time_booking = ? , reason = ? , id_patient = ? , id_doctor = ? WHERE id = ?;";
+            String sql = "UPDATE bookings SET booking_date = ? , seat = ? , id_passenger = ? , id_flight = ?  WHERE id = ?;";
             PreparedStatement objPrepared = objConnection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
-            objPrepared.setString(1, objBooking.getDate_booking());
-            objPrepared.setString(2, objBooking.getTime_booking());
-            objPrepared.setString(3, objBooking.getReason());
-            objPrepared.setInt(4, objBooking.getId_patient());
-            objPrepared.setInt(5, objBooking.getId_doctor());
+            objPrepared.setString(1, objBooking.getBooking_date());
+            objPrepared.setString(2, objBooking.getSeat());
+            objPrepared.setInt(3, objBooking.getId_passenger());
+            objPrepared.setInt(4, objBooking.getId_flight());
 
-            objPrepared.setInt(6, objBooking.getId());
+            objPrepared.setInt(5, objBooking.getId());
 
             int rowAffected = objPrepared.executeUpdate();
 
@@ -143,15 +135,22 @@ public class BookingModel implements CRUD {
             objPrepare.setInt(1,id);
             //5. execute
             ResultSet objResult = objPrepare.executeQuery();
-
+/*CREATE TABLE bookings(
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+booking_date DATE NOT NULL,
+seat varchar(40) NOT NULL,
+id_passenger int NOT NULL,
+FOREIGN KEY (id_passenger) REFERENCES passengers(id),
+id_flight int NOT NULL,
+FOREIGN KEY (id_flight) REFERENCES flights(id)
+);*/
             while (objResult.next()){
                 objBooking = new Booking();
                 objBooking.setId(objResult.getInt("id"));
-                objBooking.setDate_booking(objResult.getString("date_booking"));
-                objBooking.setTime_booking(objResult.getString("time_booking"));
-                objBooking.setReason(objResult.getString("reason"));
-                objBooking.setId_patient(objResult.getInt("id_patient"));
-                objBooking.setId_doctor(objResult.getInt("id_doctor"));
+                objBooking.setBooking_date(objResult.getString("booking_date"));
+                objBooking.setSeat(objResult.getString("seat"));
+                objBooking.setId_passenger(objResult.getInt("id_passenger"));
+                objBooking.setId_flight(objResult.getInt("id_flight"));
             }
 
         }catch (Exception e){
@@ -168,11 +167,11 @@ public class BookingModel implements CRUD {
         //1. Open connection
         Connection objConnection = ConfigDB.openConnection();
         //2. Initialize a list to save data.
-        List<Object> listbookings = new ArrayList<>();
+        List<Object> listBookings = new ArrayList<>();
 
         try{
             //3. Write sentence:
-            String sql = "SELECT * FROM bookings INNER JOIN patients ON bookings.id_patient = patients.id INNER JOIN doctors ON bookings.id_doctor = doctors.id ORDER BY bookings.id ASC;";
+            String sql = "SELECT * FROM bookings INNER JOIN passenger ON bookings.id_passenger = passenger.id INNER JOIN flights ON bookings.id_flight = flight.id ORDER BY bookings.id ASC;";
             //4. Use preparedStatement
             PreparedStatement objPreparedStatement = objConnection.prepareStatement(sql);
             //5. Execute
@@ -181,15 +180,15 @@ public class BookingModel implements CRUD {
             while(objResult.next()){
                 Booking objBooking = new Booking();
                 objBooking.setId(objResult.getInt("id"));
-                objBooking.setDate_booking(objResult.getString("date_booking"));
-                objBooking.setTime_booking(objResult.getString("time_booking"));
-                objBooking.setReason(objResult.getString("reason"));
-                objBooking.setId_patient(objResult.getInt("id_patient"));
-                objBooking.setName_patient(objResult.getString("patients.name"));
-                objBooking.setId_doctor(objResult.getInt("id_doctor"));
-                objBooking.setName_doctor(objResult.getString("doctors.name"));
+                objBooking.setId(objResult.getInt("id"));
+                objBooking.setBooking_date(objResult.getString("booking_date"));
+                objBooking.setSeat(objResult.getString("seat"));
+                objBooking.setId_passenger(objResult.getInt("id_passenger"));
+                objBooking.setId_flight(objResult.getInt("id_flight"));
+                objBooking.setName_passenger(objResult.getString("passenger.name"));
+                objBooking.setDestination(objResult.getString("flights.destination"));
 
-                listbookings.add(objBooking);
+                listBookings.add(objBooking);
             }
 
         }catch (SQLException e){
@@ -199,6 +198,6 @@ public class BookingModel implements CRUD {
         //7. Close connection
         ConfigDB.closeConnection();
 
-        return listbookings;
+        return listBookings;
     }
 }

@@ -1,11 +1,13 @@
 package controller;
 
 import entity.Booking;
+import entity.Flight;
 import model.BookingModel;
 import model.FlightModel;
 import model.PassengerModel;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookingController {
@@ -19,42 +21,60 @@ public class BookingController {
                 JOptionPane.QUESTION_MESSAGE
         );
     }
+    /*CREATE TABLE bookings(
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    booking_date DATE NOT NULL, ---------
+    seat varchar(40) NOT NULL,  ---------
+    id_passenger int NOT NULL,
+    FOREIGN KEY (id_passenger) REFERENCES passengers(id),
+    id_flight int NOT NULL,
+    FOREIGN KEY (id_flight) REFERENCES flights(id)
+    );*/
+
+    private List<Flight> getAllFlights(){
+        FlightModel objFlightModel = new FlightModel();
+        List<Flight> listFlights = null;
+        List<Object> allFlights = objFlightModel.findAll();
+        if(allFlights != null){
+            listFlights = new ArrayList<>();
+            for(Object objF : objFlightModel.findAll()){
+                Flight objFlight = (Flight) objF;
+                listFlights.add(objFlight);
+
+            }
+        }
+        return  listFlights;
+    }
 
     public void create() {
 
         Booking objBooking = new Booking();
-        PassengerController objPassengerController = new PassengerController();
-        PassengerModel objPM = new PassengerModel();
-        FlightController objFlightController = new FlightController();
-        FlightModel objDC = new FlightModel();
 
-        String date_booking = JOptionPane.showInputDialog("Enter date booking: yyyy-mm-dd");
-        while (!date_booking.matches("\\d{4}-\\d{2}-\\d{2}")) {
-            date_booking = JOptionPane.showInputDialog("Please enter a valid date: yyyy-mm-dd");
-        }
-        objBooking.setDate_booking(date_booking);
+        List<Flight> listFlights = getAllFlights();
 
-        Object[] optionsMenu = {"09:00:00","10:00:00","11:00:00","12:00:00","13:00:00","14:00:00","15:00:00","16:00:00","17:00:00","18:00:00","19:00:00","20:00:00",};
-        Object time_booking = JOptionPane.showInputDialog(
+        if(listFlights!= null){
+            String[] departureTimes = new String[listFlights.size()]; // Creamos un array del tamaño de la lista de vuelos
+
+            for (int i = 0; i < listFlights.size(); i++) {
+                Flight flight = listFlights.get(i);
+                departureTimes[i] = flight.getDestination();
+            }
+
+            Object time_booking = JOptionPane.showInputDialog(
                     null,
                     "Select an option: ",
                     "Menu",
                     JOptionPane.QUESTION_MESSAGE,
                     null,
-                    optionsMenu,
-                    optionsMenu[0]);
-        objBooking.setTime_booking((String) time_booking);
+                    departureTimes,
+                    departureTimes[0]);
 
-        String reason = creatingQuestion("Reason:","Creating Booking");
-        objBooking.setReason(reason);
 
-        int id_patient = Integer.parseInt(JOptionPane.showInputDialog(null, STR."Selec Patient's ID: \n\{objPassengerController.getAll(objPM.findAll())}"));
-        objBooking.setId_patient(id_patient);
-        int id_doctor = Integer.parseInt(JOptionPane.showInputDialog(null, STR."Selec Doctor's ID: \n\{objFlightController.getAll(objDC.findAll())}"));
-        objBooking.setId_doctor(id_doctor);
-
-        objBooking = (Booking) this.objBookingModel.create(objBooking);
-        JOptionPane.showMessageDialog(null, objBooking.toString(false));
+            objBooking = (Booking) this.objBookingModel.create(objBooking);
+            JOptionPane.showMessageDialog(null, objBooking.toString(false));
+        }else{
+            JOptionPane.showMessageDialog(null,"There's no Flights available.");
+        }
     }
     
     public void getAll(){
