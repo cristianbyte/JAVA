@@ -135,15 +135,7 @@ public class BookingModel implements CRUD {
             objPrepare.setInt(1,id);
             //5. execute
             ResultSet objResult = objPrepare.executeQuery();
-/*CREATE TABLE bookings(
-id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-booking_date DATE NOT NULL,
-seat varchar(40) NOT NULL,
-id_passenger int NOT NULL,
-FOREIGN KEY (id_passenger) REFERENCES passengers(id),
-id_flight int NOT NULL,
-FOREIGN KEY (id_flight) REFERENCES flights(id)
-);*/
+
             while (objResult.next()){
                 objBooking = new Booking();
                 objBooking.setId(objResult.getInt("id"));
@@ -168,10 +160,18 @@ FOREIGN KEY (id_flight) REFERENCES flights(id)
         Connection objConnection = ConfigDB.openConnection();
         //2. Initialize a list to save data.
         List<Object> listBookings = new ArrayList<>();
-
+            /*CREATE TABLE bookings(
+            id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+            booking_date DATE NOT NULL,
+            seat varchar(40) NOT NULL,
+            id_passenger int NOT NULL,
+            FOREIGN KEY (id_passenger) REFERENCES passengers(id),
+            id_flight int NOT NULL,
+            FOREIGN KEY (id_flight) REFERENCES flights(id)
+            );*/
         try{
             //3. Write sentence:
-            String sql = "SELECT * FROM bookings INNER JOIN passenger ON bookings.id_passenger = passenger.id INNER JOIN flights ON bookings.id_flight = flight.id ORDER BY bookings.id ASC;";
+            String sql = "SELECT * FROM bookings INNER JOIN passengers ON bookings.id_passenger = passengers.id INNER JOIN flights ON bookings.id_flight = flights.id ORDER BY bookings.id ASC;";
             //4. Use preparedStatement
             PreparedStatement objPreparedStatement = objConnection.prepareStatement(sql);
             //5. Execute
@@ -180,19 +180,18 @@ FOREIGN KEY (id_flight) REFERENCES flights(id)
             while(objResult.next()){
                 Booking objBooking = new Booking();
                 objBooking.setId(objResult.getInt("id"));
-                objBooking.setId(objResult.getInt("id"));
                 objBooking.setBooking_date(objResult.getString("booking_date"));
                 objBooking.setSeat(objResult.getString("seat"));
                 objBooking.setId_passenger(objResult.getInt("id_passenger"));
                 objBooking.setId_flight(objResult.getInt("id_flight"));
-                objBooking.setName_passenger(objResult.getString("passenger.name"));
+                objBooking.setName_passenger(objResult.getString("passengers.name"));
                 objBooking.setDestination(objResult.getString("flights.destination"));
 
                 listBookings.add(objBooking);
             }
 
         }catch (SQLException e){
-            JOptionPane.showMessageDialog(null, "Data acquisition error");
+            JOptionPane.showMessageDialog(null, STR."Data acquisition error: \{e.getMessage()}");
         }
 
         //7. Close connection

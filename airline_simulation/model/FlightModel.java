@@ -16,15 +16,7 @@ import java.util.List;
 public class FlightModel implements CRUD {
 
     AirplaneModel objAM = new AirplaneModel();
-    /*CREATE TABLE flights(
-id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-destination varchar(40) NOT NULL,
-departure_date DATE  NOT NULL,
-departure_time TIME NOT NULL,
-INT NOT NULL,
-FOREIGN KEY (id_airplane) REFERENCES airplanes(id)
-);
-*/
+
     public List<Object> listAirplanesAvailable(String date) {
         Connection objConnection = null;
         List<Object> listAirplanes = new ArrayList<>();
@@ -104,7 +96,7 @@ FOREIGN KEY (id_airplane) REFERENCES airplanes(id)
         boolean isUpdated = false;
 
         try{
-            String sql = "UPDATE flight SET destination = ?, departure_date = ?, departure_time = ?, id_airplane = ? WHERE id = ?;";
+            String sql = "UPDATE flights SET destination = ?, departure_date = ?, departure_time = ?, id_airplane = ? WHERE id = ?;";
             PreparedStatement objPrepared = objConnection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
             objPrepared.setString(1, objFlight.getDestination());
             objPrepared.setString(2, objFlight.getDeparture_date());
@@ -139,7 +131,7 @@ FOREIGN KEY (id_airplane) REFERENCES airplanes(id)
 
         try {
             //4. Write sentence
-            String sql = "DELETE FROM flight WHERE flight.id = ?;";
+            String sql = "DELETE FROM flights WHERE flights.id = ?;";
             //5.
             PreparedStatement objPrepare = objConnection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
             //6.
@@ -169,7 +161,7 @@ FOREIGN KEY (id_airplane) REFERENCES airplanes(id)
         Flight objFlight = null;
         try{
             //2. SQL Sentence
-            String sql = "SELECT * FROM flight WHERE flight.id = ?";
+            String sql = "SELECT * FROM flights WHERE flights.id = ?";
             //3. Preparing statement
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
             //4.
@@ -194,7 +186,15 @@ FOREIGN KEY (id_airplane) REFERENCES airplanes(id)
 
         return objFlight;
     }
-
+    /*CREATE TABLE flights(
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+destination varchar(40) NOT NULL,
+departure_date DATE  NOT NULL,
+departure_time TIME NOT NULL,
+INT NOT NULL,
+FOREIGN KEY (id_airplane) REFERENCES airplanes(id)
+);
+*/
     public List<Object> findAll() {
         //1. Open connection
         Connection objConnection = ConfigDB.openConnection();
@@ -203,7 +203,7 @@ FOREIGN KEY (id_airplane) REFERENCES airplanes(id)
 
         try{
             //3. Write sentence:
-            String sql = "SELECT * FROM flight INNER JOIN airplanes ON flight.id_airplane = airplane.id ORDER BY flight.id ASC;";
+            String sql = "SELECT * FROM flights INNER JOIN airplanes ON flights.id_airplane = airplanes.id ORDER BY flights.id ASC;";
             //4. Use preparedStatement
             PreparedStatement objPreparedStatement = objConnection.prepareStatement(sql);
             //5. Execute
@@ -216,7 +216,8 @@ FOREIGN KEY (id_airplane) REFERENCES airplanes(id)
                 objFlight.setDeparture_date(objResult.getString("departure_date"));
                 objFlight.setDeparture_time(objResult.getString("departure_time"));
                 objFlight.setId_airplane(objResult.getInt("id_airplane"));
-                objFlight.setModel_airplane(objResult.getString("airplane.model"));
+                objFlight.setAirplane_capacity(objResult.getInt("airplanes.capacity"));
+                objFlight.setModel_airplane(objResult.getString("airplanes.model"));
 
                 listflight.add(objFlight);
             }

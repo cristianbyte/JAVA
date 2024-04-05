@@ -6,6 +6,7 @@ public class Flight {
     private String departure_date;
     private String departure_time;
     private int id_airplane;
+    private int airplane_capacity;
     private String model_airplane;
 
     public int getId() {
@@ -22,6 +23,14 @@ public class Flight {
 
     public void setDestination(String destination) {
         this.destination = destination;
+    }
+
+    public int getAirplane_capacity() {
+        return airplane_capacity;
+    }
+
+    public void setAirplane_capacity(int airplane_capacity) {
+        this.airplane_capacity = airplane_capacity;
     }
 
     public String getDeparture_date() {
@@ -58,12 +67,21 @@ public class Flight {
 
     public Flight(){}
 
-    public Flight(int id, String destination, String departure_date, String departure_time, int id_airplane, String model_airplane) {
+    public Flight(int id, String destination, String departure_date, String departure_time, int id_airplane) {
         this.id = id;
         this.destination = destination;
         this.departure_date = departure_date;
         this.departure_time = departure_time;
         this.id_airplane = id_airplane;
+    }
+
+    public Flight(int id, String destination, String departure_date, String departure_time, int id_airplane, int airplane_capacity, String model_airplane) {
+        this.id = id;
+        this.destination = destination;
+        this.departure_date = departure_date;
+        this.departure_time = departure_time;
+        this.id_airplane = id_airplane;
+        this.airplane_capacity = airplane_capacity;
         this.model_airplane = model_airplane;
     }
 

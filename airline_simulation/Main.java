@@ -15,7 +15,7 @@ public class Main {
         AirplaneController objAirplaneController = new AirplaneController();
         BookingController objBookingController = new BookingController();
 
-        Object[] optionsMenu = {"Manage Airplane","Manage Flights","Manage Bookings","Manage Passengers","Exit"};
+        Object[] optionsMenu = {"Manage Airplanes","Manage Flights","Manage Bookings","Manage Passengers","Exit"};
         Object seleccion;
 
         do{
@@ -94,7 +94,7 @@ public class Main {
                     }while(!Objects.equals(seleccion,"Exit"));
                     break;
                 case "Manage Airplanes":
-                    Object[] optionsAirplane = { "Create Airplane","List Airplane","Update Airplane","Delete Airplane","Exit"};
+                    Object[] optionsAirplane = { "Create Airplane","List Airplane","Delete Airplane","Exit"};
                     do{
                         seleccion = JOptionPane.showInputDialog(
                                 new JFrame(),
@@ -135,16 +135,16 @@ public class Main {
                             break;
                         }
                         switch ((String) seleccion){
-                            case "Create Booking":
+                            case "Create Bookings":
                                 objBookingController.create();
                                 break;
-                            case "List Booking":
+                            case "List Bookings":
                                 objBookingController.getAll();
                                 break;
-                            case "Update Booking":
-                                objBookingController.update();
+                            case "Update Bookings":
+                                //objBookingController.update();
                                 break;
-                            case "Delete Booking":
+                            case "Delete Bookings":
                                 objBookingController.delete();
                                 break;
                         }

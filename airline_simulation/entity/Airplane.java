@@ -1,5 +1,7 @@
 package entity;
 
+import javax.swing.*;
+
 public class Airplane {
     private int id;
     private String model;

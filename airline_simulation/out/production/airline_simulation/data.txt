@@ -1,0 +1,32 @@
+CREATE TABLE airplanes(
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+model varchar(40) NOT NULL,
+capacity INT NOT NULL
+);
+
+CREATE TABLE flights(
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+destination varchar(40) NOT NULL,
+departure_date DATE  NOT NULL,
+departure_time TIME NOT NULL,
+id_airplane INT NOT NULL,
+FOREIGN KEY (id_airplane) REFERENCES airplanes(id)
+);
+
+CREATE TABLE passengers(
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+name varchar(40) NOT NULL,
+last_name varchar(40) NOT NULL,
+identity varchar (40) NOT NULL
+);
+
+
+CREATE TABLE bookings(
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+booking_date DATE NOT NULL,
+seat varchar(40) NOT NULL,
+id_passenger int NOT NULL,
+FOREIGN KEY (id_passenger) REFERENCES passengers(id),
+id_flight int NOT NULL,
+FOREIGN KEY (id_flight) REFERENCES flights(id)
+);

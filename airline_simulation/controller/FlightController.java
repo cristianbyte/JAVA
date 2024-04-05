@@ -54,7 +54,7 @@ public class FlightController {
         String departure_time = creatingQuestion("Departure Time: hh:mm:ss","Creating Flight");
         objFlight.setDeparture_time(departure_time);
 
-        int id_airplane = Integer.parseInt(JOptionPane.showInputDialog(null, STR."Airplanes avaliables:  \n\{this.getAll(objFlightModel.listAirplanesAvailable(departure_date))} \nSelect the Airplane's ID:"));
+        int id_airplane = Integer.parseInt(JOptionPane.showInputDialog(null, STR."Airplanes avaliables:  \n\{objAirplaneController.getAll(objFlightModel.listAirplanesAvailable(departure_date))} \nSelect the Airplane's ID:"));
         objFlight.setId_airplane(id_airplane);
 
         objFlight = (Flight) this.objFlightModel.create(objFlight);
@@ -90,7 +90,7 @@ public class FlightController {
             String destination = JOptionPane.showInputDialog(null,"Enter destination:", objFlight.getDestination());
             String departure_date = JOptionPane.showInputDialog(null, "Enter new departure date:", objFlight.getDeparture_date());
             String departure_time = JOptionPane.showInputDialog(null, "Enter new departure time:", objFlight.getDeparture_time());
-            int id_airplane =  Integer.parseInt( JOptionPane.showInputDialog(null, STR."Specialties:  \n \{objAirplaneController.getAll((objAM.findAll()))} \nSelect the new Airplane's ID:", objFlight.getId_airplane()));
+            int id_airplane =  Integer.parseInt( JOptionPane.showInputDialog(null, STR."Airpalnes :  \n \{objAirplaneController.getAll(objAM.findAll())} \nSelect the new Airplane's ID:", objFlight.getId_airplane()));
 
             /*CREATE TABLE flights(
             id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,

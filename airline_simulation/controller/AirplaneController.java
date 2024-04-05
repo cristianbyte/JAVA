@@ -30,7 +30,7 @@ public class AirplaneController {
 
         String name = creatingQuestion("Name: ","Creating Airplane");
         objAirplane.setModel(name);
-        int description = Integer.parseInt(creatingQuestion("Description: ","Creating Airplane"));
+        int description = Integer.parseInt(creatingQuestion("Capacity: ","Creating Airplane"));
         objAirplane.setCapacity(description);
 
         objAirplane = (Airplane) this.objAirplaneModel.create(objAirplane);

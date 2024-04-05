@@ -2,6 +2,7 @@ package controller;
 
 import entity.Booking;
 import entity.Flight;
+import model.AirplaneModel;
 import model.BookingModel;
 import model.FlightModel;
 import model.PassengerModel;
@@ -46,28 +47,75 @@ public class BookingController {
         return  listFlights;
     }
 
+    private String[] getSeatsList(int airplaneCapacity){
+
+        /* obtain occupied seats */
+
+
+        /* continue listing seats */
+        String[] seatsList = new String[airplaneCapacity];
+        char sixthChar = '@';
+        try{
+            for (int i = 10; i < airplaneCapacity+10 ; i++){
+                if( i % 10 == 0 ) sixthChar++;
+                seatsList[i] = Character.toString(sixthChar).concat(Integer.toString(i));
+            }
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        return seatsList;
+    }
+
     public void create() {
 
         Booking objBooking = new Booking();
 
         List<Flight> listFlights = getAllFlights();
-
         if(listFlights!= null){
-            String[] departureTimes = new String[listFlights.size()]; // Creamos un array del tamaño de la lista de vuelos
-
+            String[] departureList = new String[listFlights.size()]; // Creamos un array del tamaño de la lista de vuelos
+            Flight objFlight = new Flight();
             for (int i = 0; i < listFlights.size(); i++) {
                 Flight flight = listFlights.get(i);
-                departureTimes[i] = flight.getDestination();
+                departureList[i] = flight.getDestination();
             }
 
-            Object time_booking = JOptionPane.showInputDialog(
+            Object departureSelected = JOptionPane.showInputDialog(
                     null,
                     "Select an option: ",
-                    "Menu",
+                    "Medellin to:",
                     JOptionPane.QUESTION_MESSAGE,
                     null,
-                    departureTimes,
-                    departureTimes[0]);
+                    departureList,
+                    departureList[0]);
+            objBooking.setBooking_date((String) departureSelected);
+
+            /* seating logic: searching airplane capacity */
+            for (int i = 0; i < listFlights.size(); i++) {
+                if( departureList[i] == departureSelected) objFlight = listFlights.get(i);
+            }
+            int airplaneCapacity = objFlight.getAirplane_capacity();
+            /* List seats A10-20, B10-B20... */
+            String[] seatsList = getSeatsList(airplaneCapacity);
+            Object seatSelected = JOptionPane.showInputDialog(
+                    null,
+                    "Select an option: ",
+                    "Seat:",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    seatsList,
+                    seatsList[30]);
+            objBooking.setSeat((String) seatSelected);
+
+
+
+
+
+
+
+
+
+
+
 
 
             objBooking = (Booking) this.objBookingModel.create(objBooking);
@@ -92,41 +140,7 @@ public class BookingController {
     }
 
     public void update(){
-        FlightController objFlightController = new FlightController();
-        FlightModel objDC = new FlightModel();
-        String listBooking = this.getAll(this.objBookingModel.findAll());
 
-        int idUpdated = Integer.parseInt(JOptionPane.showInputDialog(listBooking + "\n Enter the ID to edit."));
-
-        Booking objBooking = (Booking) this.objBookingModel.findById(idUpdated);
-
-        if(objBooking == null){
-            JOptionPane.showMessageDialog(null,"Booking not found.");
-        }else{
-                /*
-CREATE TABLE bookings(
-id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-date_booking DATE NOT NULL,
-time_booking TIME NOT NULL,
-reason varchar(40) NOT NULL,
-id_patient int NOT NULL,
-FOREIGN KEY (id_patient) REFERENCES patients(id),
-id_doctor int NOT NULL,
-FOREIGN KEY (id_doctor) REFERENCES doctors(id)
-);
-* */
-            String date_booking = JOptionPane.showInputDialog(null,"Enter the new date yyyy-mm-dd :", objBooking.getDate_booking());
-            String time_booking = JOptionPane.showInputDialog(null, "Enter new time hh:mm:ss", objBooking.getTime_booking());
-            String reason = JOptionPane.showInputDialog(null, "Enter new reason", objBooking.getReason());
-            int id_doctor = Integer.parseInt(JOptionPane.showInputDialog(null, STR."Enter new Doctor's ID \n\{ objFlightController.getAll(objDC.findAll())}", objBooking.getId_doctor()));
-
-            objBooking.setDate_booking(date_booking);
-            objBooking.setTime_booking(time_booking);
-            objBooking.setReason(reason);
-            objBooking.setId_doctor(id_doctor);
-
-            this.objBookingModel.update(objBooking);
-        }
     }
 
     public void delete(){

@@ -22,9 +22,9 @@ public class PassengerController {
 
         Passenger objPassenger = new Passenger();
 
-        String name = creatingQuestion("Name: ","Creating Patient");
+        String name = creatingQuestion("Name: ","Creating Passenger");
         objPassenger.setName(name);
-        String lastName = creatingQuestion("Last Name: ","Creating Patient");
+        String lastName = creatingQuestion("Last Name: ","Creating Passenger");
         objPassenger.setLast_name(lastName);
 
         String identity = JOptionPane.showInputDialog("Enter your identity: ");
@@ -44,7 +44,7 @@ public class PassengerController {
     }
 
     public String getAll(List listObject){
-        StringBuilder list = new StringBuilder("List Patients: \n");
+        StringBuilder list = new StringBuilder("List Passenger: \n");
         for(Object obj : listObject){
             Passenger objCoder = (Passenger) obj;
             list.append(objCoder.toString()).append("\n");
@@ -60,12 +60,12 @@ public class PassengerController {
         Passenger objPassenger = (Passenger) this.objPatientModel.findById(idUpdated);
 
         if(objPassenger == null){
-            JOptionPane.showMessageDialog(null,"Patient not found.");
+            JOptionPane.showMessageDialog(null,"Passenger not found.");
         }else{
-            String name = JOptionPane.showInputDialog(null,"Enter patient name:", objPassenger.getName());
-            String lastName = JOptionPane.showInputDialog(null, "Enter patient last name:", objPassenger.getLast_name());
+            String name = JOptionPane.showInputDialog(null,"Enter Passenger name:", objPassenger.getName());
+            String lastName = JOptionPane.showInputDialog(null, "Enter Passenger last name:", objPassenger.getLast_name());
 
-            String identity = JOptionPane.showInputDialog(null,"Enter patient identity:", objPassenger.getIdentity());
+            String identity = JOptionPane.showInputDialog(null,"Enter Passenger identity:", objPassenger.getIdentity());
             while (!identity.matches("\\d+")) {
                 identity = JOptionPane.showInputDialog("Please enter a valid number:");
             }
@@ -86,9 +86,9 @@ public class PassengerController {
         Passenger objPassenger = (Passenger) this.objPatientModel.findById(idDelete);
 
         if(objPassenger == null){
-            JOptionPane.showMessageDialog(null,"Patient not found.");
+            JOptionPane.showMessageDialog(null,"Passenger not found.");
         }else{
-            confirm = JOptionPane.showConfirmDialog(null,"Sure? You want to delete this patient? \n"+ objPassenger.toString(), "Deleting Patient",
+            confirm = JOptionPane.showConfirmDialog(null,"Sure? You want to delete this Passenger? \n"+ objPassenger.toString(), "Deleting Passenger",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE);
             if (confirm == JOptionPane.YES_OPTION){
