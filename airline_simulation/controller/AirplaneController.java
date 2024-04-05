@@ -5,6 +5,8 @@ import model.AirplaneModel;
 
 import javax.swing.*;
 import java.util.List;
+
+import static java.lang.StringTemplate.STR;
 /*
 CREATE TABLE airplanes(
         id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,

@@ -9,7 +9,9 @@ import model.PassengerModel;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class BookingController {
 
@@ -22,15 +24,6 @@ public class BookingController {
                 JOptionPane.QUESTION_MESSAGE
         );
     }
-    /*CREATE TABLE bookings(
-    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    booking_date DATE NOT NULL, ---------
-    seat varchar(40) NOT NULL,  ---------
-    id_passenger int NOT NULL,
-    FOREIGN KEY (id_passenger) REFERENCES passengers(id),
-    id_flight int NOT NULL,
-    FOREIGN KEY (id_flight) REFERENCES flights(id)
-    );*/
 
     private List<Flight> getAllFlights(){
         FlightModel objFlightModel = new FlightModel();
@@ -48,9 +41,6 @@ public class BookingController {
     }
 
     private String[] getSeatsList(int airplaneCapacity){
-
-        /* obtain occupied seats */
-
 
         /* continue listing seats */
         String[] seatsList = new String[airplaneCapacity];
@@ -71,6 +61,15 @@ public class BookingController {
         Booking objBooking = new Booking();
 
         List<Flight> listFlights = getAllFlights();
+            /*CREATE TABLE bookings(
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    booking_date DATE NOT NULL, --------- ✅
+    seat varchar(40) NOT NULL,  ---------   ✅
+    id_passenger int NOT NULL,
+    FOREIGN KEY (id_passenger) REFERENCES passengers(id),
+    id_flight int NOT NULL, ✅
+    FOREIGN KEY (id_flight) REFERENCES flights(id)
+    );*/
         if(listFlights!= null){
             String[] departureList = new String[listFlights.size()]; // Creamos un array del tamaño de la lista de vuelos
             Flight objFlight = new Flight();
@@ -87,7 +86,10 @@ public class BookingController {
                     null,
                     departureList,
                     departureList[0]);
-            objBooking.setBooking_date((String) departureSelected);
+            /* get the Flight object by the selected destination */
+            Flight selectedFlight = listFlights.get(Arrays.asList(departureList).indexOf((String) departureSelected));
+            objBooking.setBooking_date(selectedFlight.getDeparture_date());
+            objBooking.setId_flight(selectedFlight.getId());
 
             /* seating logic: searching airplane capacity */
             for (int i = 0; i < listFlights.size(); i++) {
@@ -96,27 +98,32 @@ public class BookingController {
             int airplaneCapacity = objFlight.getAirplane_capacity();
             /* List seats A10-20, B10-B20... */
             String[] seatsList = getSeatsList(airplaneCapacity);
+            /* show only available seats  */
+            BookingModel objBM = new BookingModel();
+            List<Object> listBooking = objBM.findAll();
+            String[] listSeats = new String[listBooking.size()];
+            for(int itm = 0; itm < listBooking.size(); itm++){
+                Booking booking = (Booking) listBooking.get(itm);
+                listSeats[itm] = booking.getSeat();
+            }
+            for(String elem : listSeats){
+                seatsList = Arrays.stream(seatsList)
+                        .filter(e -> !Objects.equals(e, elem))
+                        .toArray(String[]::new);
+            }
+
             Object seatSelected = JOptionPane.showInputDialog(
                     null,
                     "Select an option: ",
-                    "Seat:",
+                    "Seats available seats:",
                     JOptionPane.QUESTION_MESSAGE,
                     null,
                     seatsList,
                     seatsList[30]);
             objBooking.setSeat((String) seatSelected);
 
-
-
-
-
-
-
-
-
-
-
-
+            PassengerModel objPM = new PassengerModel();
+            objBooking.setId_passenger(Integer.parseInt(JOptionPane.showInputDialog(null, StringTemplate.STR."Select the Passenger's ID: \n \{objPM.findAll()}")));
 
             objBooking = (Booking) this.objBookingModel.create(objBooking);
             JOptionPane.showMessageDialog(null, objBooking.toString(false));

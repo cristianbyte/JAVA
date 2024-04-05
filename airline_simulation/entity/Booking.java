@@ -1,5 +1,7 @@
 package entity;
 
+import static java.lang.StringTemplate.STR;
+
 public class Booking {
 /*CREATE TABLE bookings(
 id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
