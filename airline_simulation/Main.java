@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.util.Objects;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) {}
 
         PassengerController objPassengerController = new PassengerController();
         FlightController objFlightController = new FlightController();
