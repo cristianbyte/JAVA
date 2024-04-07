@@ -46,9 +46,9 @@ public class BookingController {
         String[] seatsList = new String[airplaneCapacity];
         char sixthChar = '@';
         try{
-            for (int i = 10; i < airplaneCapacity+10 ; i++){
+            for (int i = 0; i < airplaneCapacity ; i++){
                 if( i % 10 == 0 ) sixthChar++;
-                seatsList[i] = Character.toString(sixthChar).concat(Integer.toString(i));
+                seatsList[i] = Character.toString(sixthChar).concat(Integer.toString(i+10));
             }
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -71,7 +71,7 @@ public class BookingController {
     FOREIGN KEY (id_flight) REFERENCES flights(id)
     );*/
         if(listFlights!= null){
-            String[] departureList = new String[listFlights.size()]; // Creamos un array del tamaño de la lista de vuelos
+            String[] departureList = new String[listFlights.size()];
             Flight objFlight = new Flight();
             for (int i = 0; i < listFlights.size(); i++) {
                 Flight flight = listFlights.get(i);
@@ -101,32 +101,50 @@ public class BookingController {
             /* show only available seats  */
             BookingModel objBM = new BookingModel();
             List<Object> listBooking = objBM.findAll();
-            String[] listSeats = new String[listBooking.size()];
-            for(int itm = 0; itm < listBooking.size(); itm++){
-                Booking booking = (Booking) listBooking.get(itm);
+            /* validate airplane capacity by id*/
+            List<Booking> seatListByAirplane = new ArrayList<>();
+            for(Object obj : listBooking ){
+                Booking ownAirplane = (Booking) obj;
+                if(ownAirplane.getId_flight() == objBooking.getId_flight()){
+                    seatListByAirplane.add(ownAirplane);
+                }
+            }
+
+            String[] listSeats = new String[seatListByAirplane.size()];
+
+            for(int itm = 0; itm < seatListByAirplane.size() -1 ; itm++){
+                Booking booking = (Booking) seatListByAirplane.get(itm);
                 listSeats[itm] = booking.getSeat();
             }
-            for(String elem : listSeats){
+            /* removing occupied seats */
+            for(String elem : listSeats ){
                 seatsList = Arrays.stream(seatsList)
                         .filter(e -> !Objects.equals(e, elem))
                         .toArray(String[]::new);
             }
 
-            Object seatSelected = JOptionPane.showInputDialog(
-                    null,
-                    "Select an option: ",
-                    "Seats available seats:",
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    seatsList,
-                    seatsList[30]);
-            objBooking.setSeat((String) seatSelected);
+            if(seatsList.length == 0 ) {
+                JOptionPane.showMessageDialog(null,"There's no more seats for this Flight");
+            }else{
+                Object seatSelected = JOptionPane.showInputDialog(
+                        null,
+                        "Select an option: ",
+                        "Seats available seats:",
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        seatsList,
+                        seatsList[0]);
+                objBooking.setSeat((String) seatSelected);
 
-            PassengerModel objPM = new PassengerModel();
-            objBooking.setId_passenger(Integer.parseInt(JOptionPane.showInputDialog(null, StringTemplate.STR."Select the Passenger's ID: \n \{objPM.findAll()}")));
+                PassengerModel objPM = new PassengerModel();
+                PassengerController objPC = new PassengerController();
 
-            objBooking = (Booking) this.objBookingModel.create(objBooking);
-            JOptionPane.showMessageDialog(null, objBooking.toString(false));
+                objBooking.setId_passenger(Integer.parseInt(JOptionPane.showInputDialog(null, STR."Select the Passenger's ID: \n \{objPC.getAll(objPM.findAll())}")));
+
+                objBooking = (Booking) this.objBookingModel.create(objBooking);
+                JOptionPane.showMessageDialog(null, objBooking.toString(false));
+            }
+
         }else{
             JOptionPane.showMessageDialog(null,"There's no Flights available.");
         }
@@ -138,7 +156,7 @@ public class BookingController {
     }
 
     public String getAll(List listObject){
-        StringBuilder list = new StringBuilder("List Specialties: \n");
+        StringBuilder list = new StringBuilder("List : \n");
         for(Object obj : listObject){
             Booking objBooking = (Booking) obj;
             list.append(objBooking.toString(true)).append("\n");

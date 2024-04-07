@@ -73,7 +73,7 @@ public class PassengerModel implements CRUD {
             JOptionPane.showMessageDialog(null, "Success!");
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, STR."Error  3546: \{e.getMessage()}");
+            JOptionPane.showMessageDialog(null, "Error  3546: "+e.getMessage());
         }
 
         ConfigDB.closeConnection();
@@ -107,7 +107,7 @@ public class PassengerModel implements CRUD {
             }
 
         }catch (Exception e){
-            JOptionPane.showMessageDialog(null, STR."ERR 2352: \{e.getMessage()}");
+            JOptionPane.showMessageDialog(null, "ERR 2352: "+e.getMessage());
         }
 
         ConfigDB.closeConnection();
@@ -179,7 +179,7 @@ public class PassengerModel implements CRUD {
             return isDeleted;
 
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, STR."Error 2528: \{e.getMessage()}");
+            JOptionPane.showMessageDialog(null, "Error 2528: "+e.getMessage());
         }
 
         return isDeleted;

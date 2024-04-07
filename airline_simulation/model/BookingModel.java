@@ -191,7 +191,7 @@ public class BookingModel implements CRUD {
             }
 
         }catch (SQLException e){
-            JOptionPane.showMessageDialog(null, STR."Data acquisition error: \{e.getMessage()}");
+            JOptionPane.showMessageDialog(null, "Data acquisition error: "+e.getMessage());
         }
 
         //7. Close connection
