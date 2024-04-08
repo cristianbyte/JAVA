@@ -22,6 +22,17 @@ public class PurchaseController {
     StoreModel objSM =  new StoreModel();
 
 
+    public void listing(){
+        int toSearch =  Integer.parseInt(JOptionPane.showInputDialog(null,"Search: " + objPC.read(objPM.read())));
+        List resultList =  objPurchaseModel.read(toSearch);
+        StringBuilder list = new StringBuilder("Coincidences : \n");
+        for(Object obj : resultList){
+            Purchase objP = (Purchase) obj;
+            list.append(objP.toString()).append("\n");
+        }
+        JOptionPane.showMessageDialog(null, list.toString());
+    }
+
     public void create(){
         Purchase objPurchase = new Purchase();
         //requesting data

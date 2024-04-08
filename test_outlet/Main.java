@@ -80,7 +80,8 @@ public class Main {
                             "\n1: View All Purchases" +
                             "\n2: Add new Purchases" +
                             "\n3: Update Purchases" +
-                            "\n4: Delete Purchases");
+                            "\n4: Delete Purchases" +
+                            "\n5: Search by Product");
                     if (selection != null){
                         try{selected = Integer.parseInt(purchaseSelection);}catch (Exception e){JOptionPane.showMessageDialog(null,"Invalid, redirecting...");break;}}
                     if(selected == 1){
@@ -91,7 +92,9 @@ public class Main {
                         objPurchaseController.update();
                     }else if(selected == 4){
                         objPurchaseController.delete();
-                    } else{
+                    } else if(selected == 5){
+                        objPurchaseController.listing();
+                    }else{
                         break;
                     }
                 }

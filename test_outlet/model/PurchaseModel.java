@@ -91,6 +91,45 @@ public class PurchaseModel implements CRUD {
         return listPurchases;
     }
 
+    public List read(int id) {
+        //1. Open connection
+        Connection objConnection = ConfigDB.openConnection();
+        //2. Initialize a list to save data.
+        List<Object> listPurchases = new ArrayList<>();
+
+        try{
+            //3. Write sentence:
+            String sql = "SELECT * FROM purchases INNER JOIN customers ON purchases.id_customer = customers.id INNER JOIN products ON purchases.id_product = products.id WHERE products.id = ?;";
+            //4. Use preparedStatement
+            PreparedStatement objPreparedStatement = objConnection.prepareStatement(sql);
+            objPreparedStatement.setString(1,String.valueOf(id));
+            //5. Execute
+            ResultSet objResult = objPreparedStatement.executeQuery();
+            //6. Get results
+            while(objResult.next()){
+                Purchase objPurchase = new Purchase();
+                objPurchase.setId(objResult.getInt("id"));
+                objPurchase.setPurchase_date(objResult.getString("purchase_date"));
+                objPurchase.setQuantity(objResult.getInt("quantity"));
+                objPurchase.setId_customer(objResult.getInt("id_customer"));
+                objPurchase.setId_product(objResult.getInt("id_product"));
+                objPurchase.setName_customer(objResult.getString("customers.name"));
+                objPurchase.setName_product(objResult.getString("products.name"));
+
+                listPurchases.add(objPurchase);
+            }
+
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Data acquisition error");
+        }
+
+        //7. Close connection
+        ConfigDB.closeConnection();
+
+        return listPurchases;
+    }
+
+
     @Override
     public boolean update(Object object) {
         Connection objConnection = ConfigDB.openConnection();
