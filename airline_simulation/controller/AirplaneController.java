@@ -5,6 +5,8 @@ import model.AirplaneModel;
 
 import javax.swing.*;
 import java.util.List;
+
+import static java.lang.StringTemplate.STR;
 /*
 CREATE TABLE airplanes(
         id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -56,13 +58,13 @@ public class AirplaneController {
         String listAirplane = this.getAll(this.objAirplaneModel.findAll());
 
         int confirm;
-        int idDelete = Integer.parseInt(JOptionPane.showInputDialog(STR."\{listAirplane}Enter the ID to delete:"));
+        int idDelete = Integer.parseInt(JOptionPane.showInputDialog(null,listAirplane + "Enter the ID to delete:"));
         Airplane objAirplane = (Airplane) this.objAirplaneModel.findById(idDelete);
 
         if(objAirplane == null){
             JOptionPane.showMessageDialog(null,"Airplane not found.");
         }else{
-            confirm = JOptionPane.showConfirmDialog(null, STR."Sure? You want to delete this Airplane? \n\{objAirplane.toString()}", "Deleting Airplane",
+            confirm = JOptionPane.showConfirmDialog(null, "Sure? You want to delete this Airplane? \n" + objAirplane.toString(), "Deleting Airplane",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE);
             if (confirm == JOptionPane.YES_OPTION){

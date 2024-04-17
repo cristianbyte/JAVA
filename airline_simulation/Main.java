@@ -5,7 +5,6 @@ import controller.FlightController;
 import controller.AirplaneController;
 
 import javax.swing.*;
-import java.util.Objects;
 
 public class Main {
     public static void main(String[] args) {
@@ -15,7 +14,7 @@ public class Main {
         AirplaneController objAirplaneController = new AirplaneController();
         BookingController objBookingController = new BookingController();
 
-        Object[] optionsMenu = {"Manage Airplanes","Manage Flights","Manage Bookings","Manage Passengers","Exit"};
+        Object[] optionsMenu = {"Manage Airplanes","Manage Flights","Manage Bookings","Manage Passengers"};
         Object seleccion;
 
         do{
@@ -27,15 +26,13 @@ public class Main {
                     null,
                     optionsMenu,
                     optionsMenu[0]);
-            if(seleccion == null){
-                break;
-            }
-
+            if(seleccion == null) break;
             switch ((String) seleccion){
                 case "Manage Passengers":
-                    Object[] optionsPassengers = { "Create Passenger","List Passengers","Update Passenger","Delete Passenger","Exit"};
+                    Object[] optionsPassengers = { "Create Passenger","List Passengers","Update Passenger","Delete Passenger"};
+                    Object seleccionPassenger;
                     do{
-                        seleccion = JOptionPane.showInputDialog(
+                        seleccionPassenger = JOptionPane.showInputDialog(
                                 new JFrame(),
                                 "Select an option: ",
                                 "Passengers",
@@ -43,9 +40,7 @@ public class Main {
                                 null,
                                 optionsPassengers,
                                 optionsPassengers[0]);
-                        if(seleccion == null){
-                            break;
-                        }
+                        if(seleccionPassenger ==  null || seleccionPassenger.equals(JOptionPane.CANCEL_OPTION)) break;
 
                         switch ((String) seleccion){
                             case "Create Passenger":
@@ -61,12 +56,13 @@ public class Main {
                                 objPassengerController.delete();
                                 break;
                         }
-                    }while(!Objects.equals(seleccion,"Exit") || seleccion == null);
+                    }while(true);
                     break;
                 case "Manage Flights":
-                    Object[] optionsFlights = { "Create Flight","List Flight","Update Flight","Delete Flight","Exit"};
+                    Object[] optionsFlights = { "Create Flight","List Flight","Update Flight","Delete Flight"};
+                    Object seleccionFlights;
                     do{
-                        seleccion = JOptionPane.showInputDialog(
+                        seleccionFlights = JOptionPane.showInputDialog(
                                 new JFrame(),
                                 "Select an option: ",
                                 "Flights",
@@ -74,9 +70,9 @@ public class Main {
                                 null,
                                 optionsFlights,
                                 optionsFlights[0]);
-                        if(seleccion == null){
-                            break;
-                        }
+
+                        if(seleccionFlights ==  null || seleccionFlights.equals(JOptionPane.CANCEL_OPTION)) break;
+
                         switch ((String) seleccion){
                             case "Create Flight":
                                 objFlightController.create();
@@ -91,12 +87,13 @@ public class Main {
                                 objFlightController.delete();
                                 break;
                         }
-                    }while(!Objects.equals(seleccion,"Exit"));
+                    }while(true);
                     break;
                 case "Manage Airplanes":
-                    Object[] optionsAirplane = { "Create Airplane","List Airplane","Delete Airplane","Exit"};
+                    Object[] optionsAirplane = { "Create Airplane","List Airplane","Delete Airplane"};
+                    Object selectionAirplane;
                     do{
-                        seleccion = JOptionPane.showInputDialog(
+                        selectionAirplane = JOptionPane.showInputDialog(
                                 new JFrame(),
                                 "Select an option: ",
                                 "Airplanes",
@@ -104,9 +101,8 @@ public class Main {
                                 null,
                                 optionsAirplane,
                                 optionsAirplane[0]);
-                        if(seleccion == null){
-                            break;
-                        }
+                        if(selectionAirplane ==  null  || selectionAirplane.equals(JOptionPane.CANCEL_OPTION)) break;
+
                         switch ((String) seleccion){
                             case "Create Airplane":
                                 objAirplaneController.create();
@@ -118,12 +114,13 @@ public class Main {
                                 objAirplaneController.delete();
                                 break;
                         }
-                    }while(!Objects.equals(seleccion,"Exit"));
+                    }while(true);
                     break;
                 case "Manage Bookings":
-                    Object[] optionsBooking = { "Create Bookings","List Bookings","Update Bookings","Delete Bookings","Exit"};
+                    Object[] optionsBooking = { "Create Bookings","List Bookings","Update Bookings","Delete Bookings"};
+                    Object selectionBooking;
                     do{
-                        seleccion = JOptionPane.showInputDialog(
+                        selectionBooking = JOptionPane.showInputDialog(
                                 new JFrame(),
                                 "Select an option: ",
                                 "Booking",
@@ -131,9 +128,9 @@ public class Main {
                                 null,
                                 optionsBooking,
                                 optionsBooking[0]);
-                        if(seleccion == null){
-                            break;
-                        }
+                        if( selectionBooking == null || selectionBooking.equals(JOptionPane.CANCEL_OPTION)) break;
+
+
                         switch ((String) seleccion){
                             case "Create Bookings":
                                 objBookingController.create();
@@ -148,9 +145,9 @@ public class Main {
                                 objBookingController.delete();
                                 break;
                         }
-                    }while(!Objects.equals(seleccion,"Exit"));
+                    }while(true);
                     break;
             }
-        }while(!Objects.equals(seleccion, "Exit"));
+        }while(true);
     }
 }

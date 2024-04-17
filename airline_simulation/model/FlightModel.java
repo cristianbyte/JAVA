@@ -76,7 +76,7 @@ public class FlightModel implements CRUD {
             JOptionPane.showMessageDialog(null, "Success!");
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, STR."Error  3206: \{e.getMessage()}");
+            JOptionPane.showMessageDialog(null, "Error  3206: "+e.getMessage());
         }
 
         ConfigDB.closeConnection();
