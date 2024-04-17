@@ -1,0 +1,28 @@
+:root{
+    --color: red;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&display=swap');
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: "Mochiy Pop P One", sans-serif;
+    font-weight: 400;
+    padding: 2rem 0;
+    font-style: normal;
+    color: var(--color);
+}
+
+h1{
+    color: black;
+    width: auto;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+th,td{
+    padding: 1rem 2rem !important;
+}

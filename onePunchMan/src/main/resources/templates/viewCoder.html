@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Coder</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+    <h1 class="title" >One Punch Coders</h1>
+
+    <div class="container d-flex justify-content-center align-items-center">
+        <table class="table table-striped table-dark w-auto" >
+            <thead>
+                <th>id</th>
+                <th>name</th>
+                <th>age</th>
+                <th>clan</th>
+                <th>actions</th>
+            </thead>
+            <tbody>
+                <tr th:each="coder : ${coderList}" >
+                    <td th:text="${coder.id}" ></td>
+                    <td th:text="${coder.name}" ></td>
+                    <td th:text="${coder.age}" ></td>
+                    <td th:text="${coder.clan}" ></td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-primary">update</button>
+                            <button class="btn btn-danger">delete</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+</body>
+</html>
