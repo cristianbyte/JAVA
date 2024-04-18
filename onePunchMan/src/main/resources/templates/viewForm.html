@@ -4,24 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
 
 </head>
 <body>
     
     <h1>Form</h1>
-    <form >
-        <label for="age">Age</label>
-        <input type="number" id="age">
+    <form th:object="${coder}" th:action="${action}" method="post" >
+
+        <input type="hidden"  th:field="*{id}" th:value="${coder.id}">
+        
         <label for="name">Name</label>
-        <input type="text" id="name" >
+        <input type="text" id="name" th:field="*{name}" th:value="${coder.name}">
+        <label for="age">Age</label>
+        <input type="number" id="age" th:field="*{age}" th:value="${coder.age}">
         <label for="clan">Clan</label>
-        <input type="text" id="clan" >
+        <input type="text" id="clan" th:field="*{clan}" th:value="${coder.clan}">
 
         <div class="action">
-            <button class="action__send">
+            <button type="submit" class="btn btn-primary">
                 Submit
             </button>
-            <a href="/" class="action__cancel"></a>
+            <a href="/" class="btn btn-danger">cancel</a>
         </div>
     </form>
 
