@@ -4,7 +4,7 @@ I'm currently learning backend development in Java at Riwi Developer Incubator. 
 
 | Name               | Technologies                       | Status           |
 |--------------------|------------------------------------|------------------|
-| sponge-tasks       | Spring Boot, Thymeleaf, MySQL      | In progress      |
+| sponge-tasks       | Spring Boot, Thymeleaf, MySQL      | In progress...   |
 | onePunchMan        | Spring Boot, Thymeleaf, MySQL      | Completed        |
 | airline_simulation | Java, MySQL                        | Completed        |
 | test_outlet        | Java, MySQL                        | Completed        |
