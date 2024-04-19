@@ -1,13 +1,13 @@
-package com.spongebob.spongetasks;
+package com.cristianbyte.spongebobtask;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpongeBobTaskManagerApplication {
+public class SpongebobTaskManagerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpongeBobTaskManagerApplication.class, args);
+		SpringApplication.run(SpongebobTaskManagerApplication.class, args);
 	}
 
 }

@@ -8,11 +8,11 @@
 		<version>3.2.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.spongebob</groupId>
-	<artifactId>sponge-tasks</artifactId>
+	<groupId>com.cristianbyte</groupId>
+	<artifactId>spongebob-task</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>SpongeBobTaskManager</name>
-	<description>A task manager inspired by the world of SpongeBob, where users can organize their daily activities with a touch of underwater fun.</description>
+	<name>spongebob-task-manager</name>
+	<description>SpongeBobTaskManager</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>

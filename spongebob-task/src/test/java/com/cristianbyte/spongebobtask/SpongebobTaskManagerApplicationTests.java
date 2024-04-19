@@ -1,10 +1,10 @@
-package com.spongebob.spongetasks;
+package com.cristianbyte.spongebobtask;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpongeBobTaskManagerApplicationTests {
+class SpongebobTaskManagerApplicationTests {
 
 	@Test
 	void contextLoads() {
