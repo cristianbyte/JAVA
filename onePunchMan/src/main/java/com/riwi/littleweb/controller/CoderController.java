@@ -1,7 +1,5 @@
 package com.riwi.littleweb.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -26,7 +24,7 @@ public class CoderController {
     @GetMapping
     public String showGetAll(Model objModel, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size){
         
-        Page<Coder> list = this.objCoderService.findPaginated(page -1 ,size);
+        Page<Coder> list = this.objCoderService.fingPaginated(page -1 ,size);
         
         objModel.addAttribute("coderList", list);
         objModel.addAttribute("currentPage", page);
@@ -72,7 +70,7 @@ public class CoderController {
         return "redirect:/";
     }
 
-    @PostMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id){
         this.objCoderService.delete(id);
         return "redirect:/";

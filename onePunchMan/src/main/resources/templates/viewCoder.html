@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Coder</title>
+    <title>View</title>
     <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
@@ -34,9 +34,17 @@
             </tbody>
         </table>
     </div>
-
-
-
+    <ul class="pagination">
+        <li class="pagination__item" th:classappend="${currentPage == 1} ? 'disabled' : ''" >
+            <a th:href="@{|/?page=${currentPage-1}|}">Prev</a>
+        </li>
+        <li class="pagination__item" th:each="i : ${#numbers.sequence(1,totalPages)}" th:classappend="${currentPage == i} ? 'active' : ''" >
+            <a th:href="@{|/?page=${i}|}" th:text="${i}"  ></a>
+        </li>
+        <li class="pagination__item"  th:classappend="${currentPage == totalPages} ? 'disabled' : ''">
+            <a th:href="@{|/?page=${currentPage+1}|}">Next</a>
+        </li>
+    </ul>
 
 </body>
 </html>

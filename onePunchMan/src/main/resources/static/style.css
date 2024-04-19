@@ -9,7 +9,12 @@
 }
 
 *{
-    font-family: "Jersey 25", monospace;    
+    transform: scale(1.03);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Jersey 25", monospace; 
+    text-decoration: none;   
 }
 
 body{
@@ -19,6 +24,7 @@ body{
     flex-direction: column;
     font-weight: 400;
     padding: 2rem 0;
+    gap: 3vh;
     font-style: normal;
     color: var(--color);
     background-image: url(./background.jpg);
@@ -132,4 +138,55 @@ tbody tr:nth-child(2n +1){
 
 .action :first-child{
     width: 50%;
+}
+
+
+.pagination{
+    height: 2rem;
+    display: flex;
+    text-decoration: none;
+    float: left;
+    width: min-content;
+    border-radius: .5rem;
+    overflow: hidden;
+    background-color: #e2dcc799;
+    
+}
+
+.pagination__item:first-child,.pagination__item:last-child{
+    width: auto;
+    padding: 0 .3rem;
+    background-color: var(--colorSkin);
+    height: 100%;
+}
+
+.pagination__item {
+    display: inline;
+    float: left;
+    width: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    list-style-type: none;
+    cursor: pointer;
+}
+
+.active{
+    background-color: var(--colorBlue);
+}
+
+.pagination__item:hover{
+    transform: scale(1.1);
+}
+
+.pagination__item a{
+    font-size: 1.3rem;
+    color: white;
+}
+
+.disabled{
+    pointer-events: none;
+    background-color: gray !important;
+    color: black !important;
 }

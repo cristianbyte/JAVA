@@ -46,7 +46,7 @@ public class CoderService {
         this.objCoderRepo.deleteById(id);;
     }
 
-    public <Page>Coder fingPaginated(int page, int size){
+    public Page<Coder> fingPaginated(int page, int size){
         if(page < 0){
             page = 1;
         }
