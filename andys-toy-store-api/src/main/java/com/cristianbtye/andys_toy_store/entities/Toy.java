@@ -1,4 +1,4 @@
-package com.cristianbtye.myproducts.entities;
+package com.cristianbtye.andys_toy_store.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data //Generete Getters and Setters
 @AllArgsConstructor // Fully Constructor
 @NoArgsConstructor // Empty Constructor
-public class Product {
+public class Toy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,6 +20,4 @@ public class Product {
     private int quantity;
     private Double price;
 
-    
-    
 }
