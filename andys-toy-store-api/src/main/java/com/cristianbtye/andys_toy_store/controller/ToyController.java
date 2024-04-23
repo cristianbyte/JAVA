@@ -11,9 +11,11 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -29,7 +31,7 @@ public class ToyController {
         return ResponseEntity.ok(this.toyService.getAll());
     }
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public Boolean delete(@PathVariable Long id){
         return this.toyService.delete(id);
     }
@@ -44,7 +46,7 @@ public class ToyController {
         return ResponseEntity.ok(toyService.save(toy));
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity<Toy> updateToy(@RequestBody Toy toy) {
         return ResponseEntity.ok(toyService.save(toy));
     }
