@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,5 +24,15 @@ public class BlueController {
     @GetMapping
     public ResponseEntity<List<BluEvent>>  getAll() {
         return ResponseEntity.ok(this.blueService.getAll());
+    }
+
+    @PostMapping("/save")
+    public ResponseEntity<BluEvent> create(@RequestBody BluEvent bluEvent) {
+        return ResponseEntity.ok(this.blueService.save(bluEvent));
+    }
+    
+    @PostMapping("/update")
+    public ResponseEntity<BluEvent> update(@RequestBody BluEvent bluEvent) {
+        return ResponseEntity.ok(this.blueService.save(bluEvent));
     }
 }

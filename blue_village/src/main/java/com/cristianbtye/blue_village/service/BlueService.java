@@ -32,8 +32,7 @@ public class BlueService implements Iservice{
 
     @Override
     public BluEvent save(BluEvent bluEvent) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
+        return this.bluEventRepo.save(bluEvent);
     }
 
     @Override
