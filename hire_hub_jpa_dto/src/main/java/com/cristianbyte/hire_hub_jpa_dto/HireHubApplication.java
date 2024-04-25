@@ -1,12 +1,13 @@
-package com.cristianbyte.rickandmortycalulator;
+package com.cristianbyte.hire_hub_jpa_dto;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Application {
+public class HireHubApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(HireHubApplication.class, args);
 	}
+
 }
