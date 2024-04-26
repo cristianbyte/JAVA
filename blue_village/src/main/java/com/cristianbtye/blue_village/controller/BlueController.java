@@ -3,7 +3,9 @@ package com.cristianbtye.blue_village.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,5 +36,15 @@ public class BlueController {
     @PostMapping("/update")
     public ResponseEntity<BluEvent> update(@RequestBody BluEvent bluEvent) {
         return ResponseEntity.ok(this.blueService.save(bluEvent));
+    }
+
+    @DeleteMapping(path = "/delete/{id}")
+    public ResponseEntity<Boolean> delete(@PathVariable String id) {
+        return ResponseEntity.ok(this.blueService.delete(id));
+    }
+
+    @GetMapping(path = "/search/{id}")
+    public ResponseEntity<BluEvent> find(@PathVariable String id) {
+        return ResponseEntity.ok(this.blueService.findById(id));
     }
 }
