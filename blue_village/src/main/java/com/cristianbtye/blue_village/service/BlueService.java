@@ -25,32 +25,24 @@ public class BlueService implements Iservice{
     }
 
     @Override
-    public List<BluEvent> search(String name) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'search'");
-    }
-
-    @Override
     public BluEvent save(BluEvent bluEvent) {
         return this.bluEventRepo.save(bluEvent);
     }
 
     @Override
     public BluEvent update(BluEvent bluEvent) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        return this.bluEventRepo.save(bluEvent);
     }
 
     @Override
-    public boolean delete(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    public boolean delete(String id) {
+        this.bluEventRepo.deleteById(id);
+        return true;
     }
 
     @Override
-    public BluEvent findById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+    public BluEvent findById(String id) {
+        return this.bluEventRepo.findById(id).orElseThrow();
     }
     
 }

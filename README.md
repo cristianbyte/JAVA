@@ -4,8 +4,9 @@ I'm currently learning backend development in Java at Riwi Developer Incubator. 
 
 | Name                | Technologies                       | Status          |
 |---------------------|------------------------------------|-----------------|
-| andys-toy-store-api | Spring Data JPA, MySQL, Postman    | In progress...  |
-| sponge-tasks        | Spring Boot, Thymeleaf, MySQL      | In progress...  |
+| blue_village        | Spring Data JPA, MySQL, Postman    | In progress...  |
+| andys-toy-store-api | Spring Data JPA, MySQL, Postman    | Completed       |
+| sponge-tasks        | Spring Boot, Thymeleaf, MySQL      | Incomplete      |
 | onePunchMan         | Spring Boot, Thymeleaf, MySQL      | Completed       |
 | airline_simulation  | Java, MySQL                        | Completed       |
 | test_outlet         | Java, MySQL                        | Completed       |
@@ -13,6 +14,11 @@ I'm currently learning backend development in Java at Riwi Developer Incubator. 
 | week_2              | Java                               | Completed       |
 | week_3              | Java                               | Completed       |
 
+
+### blue_village
+![Blue Village Manager Poster](./blue_village/src/main/resources/static/blueVillage.png)
+
+A backend application built with Spring Boot for managing Smurf-themed events, featuring CRUD operations for event creation, updating, and deletion.
 
 ### andys-toy-store-api
 
