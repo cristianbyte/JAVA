@@ -11,11 +11,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class VacantResponse {
+public class VacantToCompanyResponse {
     private Long id;
     private String title;
     private String description;
     private StatusVacant status;
-    private CompanyToVacantResponse company;
-
 }
