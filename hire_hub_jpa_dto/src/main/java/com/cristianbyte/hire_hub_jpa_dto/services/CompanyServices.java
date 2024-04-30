@@ -16,6 +16,7 @@ import com.cristianbyte.hire_hub_jpa_dto.services.interfaces.ICompanyService;
 import com.cristianbyte.hire_hub_jpa_dto.utils.dto.request.CompanyRequest;
 import com.cristianbyte.hire_hub_jpa_dto.utils.dto.response.CompanyResponse;
 import com.cristianbyte.hire_hub_jpa_dto.utils.dto.response.VacantToCompanyResponse;
+import com.cristianbyte.hire_hub_jpa_dto.utils.exeptions.IdNotFound;
 
 import lombok.AllArgsConstructor;
 
@@ -44,14 +45,15 @@ public class CompanyServices implements ICompanyService{
 
     @Override
     public CompanyResponse update(CompanyRequest request, String id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        Company toUpdate = this.find(id);
+        Company updated = this.requestToEntity(request, toUpdate);
+        return this.entityToResponse(this.companyRepo.save(updated));
     }
 
     @Override
     public void delete(String id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        Company company = this.find(id);
+        this.companyRepo.delete(company);
     }
 
     @Override
@@ -62,7 +64,7 @@ public class CompanyServices implements ICompanyService{
     }
 
     private Company find(String id){
-        return this.companyRepo.findById(id).orElseThrow();
+        return this.companyRepo.findById(id).orElseThrow(() -> new IdNotFound("Company"));
     }
 
 
