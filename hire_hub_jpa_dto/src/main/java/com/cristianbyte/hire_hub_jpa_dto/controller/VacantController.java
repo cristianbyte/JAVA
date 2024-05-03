@@ -1,5 +1,8 @@
 package com.cristianbyte.hire_hub_jpa_dto.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +15,10 @@ import com.cristianbyte.hire_hub_jpa_dto.utils.dto.request.VacantRequest;
 import com.cristianbyte.hire_hub_jpa_dto.utils.dto.response.VacantResponse;
 
 import lombok.AllArgsConstructor;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,5 +44,12 @@ public class VacantController {
         return ResponseEntity.ok(this.vacantService.create(vacant));
     }
     
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<Map<String, String>> delete(@PathVariable Long id){
+        Map<String, String> response =  new HashMap<>();
+        response.put("Message", "successfully deleted");
+        this.vacantService.delete(id);
+        return ResponseEntity.ok(response);
+    }
     
 }

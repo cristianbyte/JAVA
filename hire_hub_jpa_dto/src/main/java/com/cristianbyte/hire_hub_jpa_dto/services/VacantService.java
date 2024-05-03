@@ -55,8 +55,7 @@ public class VacantService implements IVacantService{
 
     @Override
     public void delete(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        this.vacantRepo.deleteById(id);
     }
 
     @Override
