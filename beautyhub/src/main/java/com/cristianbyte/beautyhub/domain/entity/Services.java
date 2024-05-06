@@ -1,10 +1,13 @@
 package com.cristianbyte.beautyhub.domain.entity;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,14 +19,14 @@ import lombok.NoArgsConstructor;
 public class Services {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(nullable = false, length = 255)
+    @Lob // <- tipo texto
     private String description;
 
     @Column(nullable = false, precision = 8, scale = 2)
-    private Double price;
+    private BigDecimal price;
 }
