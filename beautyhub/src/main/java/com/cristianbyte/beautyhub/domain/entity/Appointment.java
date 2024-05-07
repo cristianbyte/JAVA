@@ -18,7 +18,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "appointments")
+@Entity(name = "appointment")
 @Data
 @Builder
 @NoArgsConstructor
@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime time;
     @Column(nullable = false)
