@@ -35,7 +35,7 @@ public class Client {
     private String email;    
 
     
-    @OneToMany(mappedBy = "clients",
+    @OneToMany(mappedBy = "client",
     fetch = FetchType.EAGER,
     cascade = CascadeType.ALL,
     orphanRemoval = false)

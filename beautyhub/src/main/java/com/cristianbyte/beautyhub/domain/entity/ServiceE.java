@@ -13,16 +13,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Entity(name = "services")
+@Entity(name = "service")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Services {
+public class ServiceE {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,7 +40,7 @@ public class Services {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "services",
+    @OneToMany(mappedBy = "service",
     fetch = FetchType.EAGER,
     cascade = CascadeType.ALL,
     orphanRemoval = false)

@@ -7,9 +7,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cristianbyte.beautyhub.api.dto.request.ServiceRequest;
 import com.cristianbyte.beautyhub.api.dto.response.ServiceResponse;
+import com.cristianbyte.beautyhub.domain.entity.ServiceE;
 import com.cristianbyte.beautyhub.domain.repositories.ServiceRepository;
 import com.cristianbyte.beautyhub.infraestructure.abstract_service.IServiceService;
 import com.cristianbyte.beautyhub.utils.enums.SortType;
@@ -17,7 +19,7 @@ import com.cristianbyte.beautyhub.utils.enums.SortType;
 import lombok.AllArgsConstructor;
 
 @Service
-@org.springframework.transaction.annotation.Transactional
+@Transactional
 @AllArgsConstructor
 public class ServiceService implements IServiceService {
 
@@ -48,6 +50,7 @@ public class ServiceService implements IServiceService {
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
 
+    @SuppressWarnings("null")
     @Override
     public Page<ServiceResponse> getAll(int page, int size, SortType sort) {
         if(page < 0) page = 0;
@@ -65,13 +68,23 @@ public class ServiceService implements IServiceService {
 
         this.serviceRepo.findAll(pagination);
 
-        return null;
+        return this.serviceRepo.findAll(pagination).map(this::entityToResponse);
     }
 
     @Override
     public List<ServiceResponse> search(String name) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'search'");
+    }
+
+    private ServiceResponse entityToResponse(ServiceE entity){
+
+        return ServiceResponse.builder()
+                .id(entity.getId())
+                .name(entity.getName())
+                .price(entity.getPrice())
+                .description(entity.getDescription())
+                .build();
     }
     
 }
