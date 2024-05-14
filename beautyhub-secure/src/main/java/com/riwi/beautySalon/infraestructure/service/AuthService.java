@@ -1,6 +1,7 @@
 package com.riwi.beautySalon.infraestructure.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.riwi.beautySalon.api.dto.request.LogInRequest;
@@ -25,6 +26,9 @@ public class AuthService implements IAuthService{
     @Autowired
     private final JwtService jwtService;
 
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
+
     @Override
     public AuthResponse logIn(LogInRequest request) {
         return null;
@@ -40,7 +44,8 @@ public class AuthService implements IAuthService{
 
         User user = User.builder()
                     .userName(request.getUserName())
-                    .password(request.getPassword())
+                    //saving password
+                    .password(passwordEncoder.encode(request.getPassword()))
                     .role(Role.CLIENT)
                     .build();
 
