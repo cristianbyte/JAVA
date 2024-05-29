@@ -1,6 +1,5 @@
 package com.riwi.beautySalon.config;
 
-import org.apache.catalina.authenticator.SpnegoAuthenticator.AuthenticateAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,33 +19,51 @@ import lombok.AllArgsConstructor;
 @Configuration
 @AllArgsConstructor
 public class ApplicationConfig {
-
-
+    /*Inyectamos el repositorio del usuario */
     @Autowired
     private final UserRepository userRepository;
+    
 
-    //defines a bean of type auth. use the configutation of spring security to obteina config already prepared.(default one)
+    /**
+     * AuthenticationManager permite el manejo del usuario en toda la app
+     * Define un bean de tipo AuthenticationManager
+     * Utiliza la configuración de spring security para obtener una configuración ya preparada (la que viene por defecto)
+     */
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception{
-        
+    public AuthenticationManager authenticationManager(
+        AuthenticationConfiguration config
+    ) throws Exception {
+
         return config.getAuthenticationManager();
     }
-
+    /**
+     * Este método crea y configura un DaoAuthenticationProvider, que es una de las implementaciones mas comunes para proveer datos a nuestra app, de esta forma guardaremos las credenciales del usuario.
+     * Guardaremos toda la información y el tipo en cifrado que tiene su contraseña
+     */
     @Bean
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+
         authenticationProvider.setPasswordEncoder(this.passwordEncoder());
         authenticationProvider.setUserDetailsService(this.userDetailsService());
+
         return authenticationProvider;
     }
 
-    // this service is used by spring boot security to load user data while authentication.
+    /**
+     * Este servicio es utilizado por Spring Security para  cargar detalles del usuario durante la autenticación
+     */
     @Bean
     public UserDetailsService userDetailsService(){
-        return username -> userRepository.findByUserName(username).orElseThrow(()-> new UsernameNotFoundException("User not found"));
+        return username -> userRepository.findByUserName(username)
+            .orElseThrow(()-> new UsernameNotFoundException("User not found"));
     }
 
-    //Define a bean for password encoder: encript and decript.
+    /**
+     * Define un bean para PasswordEnconder
+     * Este encoder es utilizado para encriptar y desencriptar las contraseñas  en la aplicacion
+     * retorna  una instacioa  de BCryptPasswordEncoder , es un método  de cifrado  o hash  fuertemente y ampliamente utilizado
+     */
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
