@@ -1,5 +1,9 @@
 package com.cristianbyte.learnify.domain.entities;
 
+import java.util.List;
+
+import org.apache.commons.lang3.RandomStringUtils;
+
 import com.cristianbyte.learnify.util.enums.RoleType;
 
 import jakarta.persistence.Column;
@@ -13,10 +17,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.util.List;
-
-import org.apache.commons.lang3.RandomStringUtils;
 
 @Entity
 @Getter

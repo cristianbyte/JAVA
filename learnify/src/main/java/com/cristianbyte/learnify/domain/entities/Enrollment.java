@@ -34,5 +34,4 @@ public class Enrollment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id" , referencedColumnName ="id")
     private Course course_id;
-
 }

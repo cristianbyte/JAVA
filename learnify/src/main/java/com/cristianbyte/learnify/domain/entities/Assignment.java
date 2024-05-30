@@ -37,7 +37,7 @@ public class Assignment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lesson_id", referencedColumnName = "id")
-    private Course lesson_id;
+    private Lesson lesson_id;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
