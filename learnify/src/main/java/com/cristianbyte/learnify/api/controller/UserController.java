@@ -19,13 +19,13 @@ import lombok.AllArgsConstructor;
 public class UserController {
     @Autowired
     private IUserService userService;
-    //return users paginated
+
     @GetMapping
     public ResponseEntity<Page<UserResponse>> getAll(
         @RequestParam(defaultValue = "1") int page,
         @RequestParam(defaultValue = "10") int size
     ){
-        return ResponseEntity.ok(this.userService.getAll(page, size));
+        return ResponseEntity.ok(this.userService.getAll(page , size));
     }
 
 }
