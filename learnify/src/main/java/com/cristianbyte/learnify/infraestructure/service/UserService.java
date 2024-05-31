@@ -13,15 +13,18 @@ import com.cristianbyte.learnify.domain.entities.User;
 import com.cristianbyte.learnify.domain.repositories.UserRepository;
 import com.cristianbyte.learnify.infraestructure.abstract_service.IUserService;
 
+import lombok.AllArgsConstructor;
+
 @Service
 @Transactional
+@AllArgsConstructor
 public class UserService implements IUserService{
 
     @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    private UserMapper userMapper;
+    private final UserMapper userMapper;
 
     @Override
     public Page<UserResponse> getAll(int page, int size) {
@@ -35,8 +38,8 @@ public class UserService implements IUserService{
     
     @Override
     public UserResponse getById(String id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
+        User response = this.find(id);
+        return  userMapper.userToUserResponse(response);
     }
     
     @Override
@@ -56,14 +59,8 @@ public class UserService implements IUserService{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
-    
-    private UserResponse entityToResp(User entity){
-    
-        return UserResponse.builder()
-                 .id(entity.getId())
-                 .username(entity.getUsername())
-                 .fullName(entity.getFullName())
-                 .email(entity.getEmail())
-                 .build();
+
+    private User find(String id) {
+        return this.userRepository.findById(id).orElseThrow();
     }
 }
