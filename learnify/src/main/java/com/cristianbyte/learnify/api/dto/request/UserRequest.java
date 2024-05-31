@@ -1,9 +1,8 @@
 package com.cristianbyte.learnify.api.dto.request;
 
-import com.cristianbyte.learnify.util.enums.RoleType;
-
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,14 +13,18 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRequest {    
-    @NotNull(message = "username is required")
+    @NotBlank(message = "username is required")
     private String username;
-    @NotNull(message = "password is required")
+
+    @NotBlank(message = "password is required")
     private String password;
-    @NotNull(message = "fullname is required")
+
+    @NotBlank(message = "fullname is required")
     private String fullName;
-    @Email(message = "email is required")
+
+    @NotBlank(message = "email is required")
+    @Email(message = "invalid email format")
     private String email;
-    @NotNull(message = "role is required")
-    private RoleType role;
+    @Pattern(regexp = "ADMIN|STUDENT|TEACHER|GUEST", message = "The state must be ADMIN, STUDENT, TEACHER or GUEST")
+    private String role;
 }

@@ -43,24 +43,25 @@ public class UserService implements IUserService{
     }
     
     @Override
-    public UserResponse create(UserRequest request) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+    public UserResponse create(UserRequest request){
+        User user = userMapper.userRequestToUser(request);
+        return userMapper.userToUserResponse(this.userRepository.save(user));
     }
     
     @Override
     public UserResponse update(String id, UserRequest request) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        User userToUpdate = this.find(id);
+        userMapper.updateFromUserRequest(request, userToUpdate);
+        userToUpdate.setId(id);
+        return userMapper.userToUserResponse(this.userRepository.save(userToUpdate));
     }
     
     @Override
     public void delete(String id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        this.userRepository.deleteById(id);
     }
 
-    private User find(String id) {
+    public User find(String id) {
         return this.userRepository.findById(id).orElseThrow();
     }
 }

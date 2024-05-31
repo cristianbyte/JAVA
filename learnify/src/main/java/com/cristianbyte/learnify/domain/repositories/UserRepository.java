@@ -7,5 +7,4 @@ import com.cristianbyte.learnify.domain.entities.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String>{
-    
 }
