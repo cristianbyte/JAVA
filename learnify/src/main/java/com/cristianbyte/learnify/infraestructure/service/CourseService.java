@@ -41,8 +41,7 @@ public class CourseService implements ICourseService{
 
     @Override
     public CourseResponse getById(Integer id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
+        return courseMapper.courseToCourseResponse(this.find(id));
     }
 
     @Override
@@ -54,14 +53,15 @@ public class CourseService implements ICourseService{
 
     @Override
     public CourseResponse update(Integer id, CourseRequest request) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        Course courseToUpdate = this.find(id);
+        courseMapper.udpateFromCourseRequest(request, courseToUpdate);
+        courseToUpdate.setId(id);
+        return courseMapper.courseToCourseResponse(this.courseRepository.save(courseToUpdate));
     }
 
     @Override
     public void delete(Integer id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        this.courseRepository.deleteById(id);
     }
 
     private Course find(int id) {
