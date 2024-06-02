@@ -18,17 +18,25 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cristianbyte.learnify.api.dto.request.UserRequest;
 import com.cristianbyte.learnify.api.dto.response.UserResponse;
 import com.cristianbyte.learnify.infraestructure.abstract_service.IUserService;
+import com.cristianbyte.learnify.util.exception.ErrorsResponse;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 
 
 @RestController
 @RequestMapping(path = "/users")
 @AllArgsConstructor
+@Tag(name = "Usrs")
 public class UserController {
     @Autowired
     private final IUserService userService;
 
+    @Operation(summary="some text", description="another some text")
     @GetMapping
     public ResponseEntity<Page<UserResponse>> getAll(
         @RequestParam(defaultValue = "1") int page,
@@ -43,6 +51,7 @@ public class UserController {
     }
 
 
+
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getMethodName(@PathVariable String id) {
         try {
@@ -51,6 +60,9 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    //    @ApiResponse(responseCode = "400", description = "Cuando el request no es valido", content = {
+    //        @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorsResponse.class))
+    //})
 
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> update(@Validated @RequestBody UserRequest user, @PathVariable String id) {
