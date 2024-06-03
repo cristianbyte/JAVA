@@ -10,8 +10,10 @@ import com.cristianbyte.learnify.api.dto.request.CourseRequest;
 import com.cristianbyte.learnify.api.dto.response.CourseResponse;
 import com.cristianbyte.learnify.api.mapper.CourseMapper;
 import com.cristianbyte.learnify.domain.entities.Course;
+import com.cristianbyte.learnify.domain.entities.User;
 import com.cristianbyte.learnify.domain.repositories.CourseRepository;
 import com.cristianbyte.learnify.infraestructure.abstract_service.ICourseService;
+import com.cristianbyte.learnify.infraestructure.helpers.EmailHelper;
 
 import lombok.AllArgsConstructor;
 
@@ -28,6 +30,9 @@ public class CourseService implements ICourseService{
 
     @Autowired
     private final CourseMapper courseMapper;
+
+    @Autowired
+    private final EmailHelper emailHelper;
 
     @Override
     public Page<CourseResponse> getAll(int page, int size) {
@@ -47,7 +52,10 @@ public class CourseService implements ICourseService{
     @Override
     public CourseResponse create(CourseRequest request) {
         Course newCourse = courseMapper.courseRequestToCourse(request);
-        newCourse.setInstructor_id(this.userService.find(request.getTeacherId()));
+        User teacher = this.userService.find(request.getTeacherId());
+        newCourse.setInstructor_id(teacher);
+        emailHelper.sendMail(teacher.getEmail() , teacher.getFullname(), newCourse.getName());
+
         return courseMapper.courseToCourseResponse(this.courseRepository.save(newCourse));
     }
 

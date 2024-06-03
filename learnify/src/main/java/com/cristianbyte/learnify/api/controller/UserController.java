@@ -31,7 +31,7 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping(path = "/users")
 @AllArgsConstructor
-@Tag(name = "Usrs")
+@Tag(name = "Users")
 public class UserController {
     @Autowired
     private final IUserService userService;
@@ -60,9 +60,9 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    //    @ApiResponse(responseCode = "400", description = "Cuando el request no es valido", content = {
-    //        @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorsResponse.class))
-    //})
+        @ApiResponse(responseCode = "400", description = "Cuando el request no es valido", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorsResponse.class))
+    })
 
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> update(@Validated @RequestBody UserRequest user, @PathVariable String id) {

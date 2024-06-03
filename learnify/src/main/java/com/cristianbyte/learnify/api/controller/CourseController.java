@@ -18,6 +18,7 @@ import com.cristianbyte.learnify.api.dto.request.CourseRequest;
 import com.cristianbyte.learnify.api.dto.response.CourseResponse;
 import com.cristianbyte.learnify.infraestructure.abstract_service.ICourseService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 
 
@@ -25,6 +26,7 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping(path = "/course")
 @AllArgsConstructor
+@Tag(name="Course")
 public class CourseController {
 
     @Autowired

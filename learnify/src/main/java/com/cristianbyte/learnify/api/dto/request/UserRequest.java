@@ -20,7 +20,7 @@ public class UserRequest {
     private String password;
 
     @NotBlank(message = "fullname is required")
-    private String fullName;
+    private String fullname;
 
     @NotBlank(message = "email is required")
     @Email(message = "invalid email format")
