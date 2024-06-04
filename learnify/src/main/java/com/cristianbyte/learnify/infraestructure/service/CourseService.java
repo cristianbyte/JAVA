@@ -1,5 +1,7 @@
 package com.cristianbyte.learnify.infraestructure.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -7,12 +9,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cristianbyte.learnify.api.dto.request.CourseRequest;
+import com.cristianbyte.learnify.api.dto.request.LessonRequest;
 import com.cristianbyte.learnify.api.dto.response.CourseResponse;
 import com.cristianbyte.learnify.api.mapper.CourseMapper;
 import com.cristianbyte.learnify.domain.entities.Course;
 import com.cristianbyte.learnify.domain.entities.User;
 import com.cristianbyte.learnify.domain.repositories.CourseRepository;
 import com.cristianbyte.learnify.infraestructure.abstract_service.ICourseService;
+import com.cristianbyte.learnify.infraestructure.abstract_service.ILessonService;
 import com.cristianbyte.learnify.infraestructure.helpers.EmailHelper;
 
 import lombok.AllArgsConstructor;
@@ -30,6 +34,9 @@ public class CourseService implements ICourseService{
 
     @Autowired
     private final CourseMapper courseMapper;
+
+    @Autowired
+    private final ILessonService ilessonService;
 
     @Autowired
     private final EmailHelper emailHelper;
@@ -54,9 +61,16 @@ public class CourseService implements ICourseService{
         Course newCourse = courseMapper.courseRequestToCourse(request);
         User teacher = this.userService.find(request.getTeacherId());
         newCourse.setInstructor_id(teacher);
+        //covert and create the new course:
+        CourseResponse courseResponse = courseMapper.courseToCourseResponse(this.courseRepository.save(newCourse));
+        List<LessonRequest> lessonList = request.getLessons();
+        //set the course_id for each lesson:
+        lessonList.forEach(lesson -> lesson.setCourse_id(courseResponse.getId()));
+        this.ilessonService.saveAll(lessonList);
+        //send email to the teacher:
         emailHelper.sendMail(teacher.getEmail() , teacher.getFullname(), newCourse.getName());
 
-        return courseMapper.courseToCourseResponse(this.courseRepository.save(newCourse));
+        return courseResponse;
     }
 
     @Override
