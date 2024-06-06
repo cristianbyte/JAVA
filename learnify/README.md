@@ -1,6 +1,6 @@
 # Learnify
-
-![Learnify Logo](./src/main/resources/static/learnifybanner.jpg)
+http://localhost:8080/v1/learnify/swagger-ui/index.html#/
+![Learnify Logo](./src/main/resources/assets/learnify.png)
 
 ## Project Description
 

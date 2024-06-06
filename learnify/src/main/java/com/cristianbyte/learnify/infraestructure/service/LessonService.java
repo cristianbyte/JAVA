@@ -68,13 +68,13 @@ public class LessonService implements ILessonService{
     }
 
     @Override
-    public void saveAll(List<LessonRequest> requestList) {
+    public List<Lesson> saveAll(List<LessonRequest> requestList) {
         List<Lesson> lessonList;
         if (requestList == null || requestList.isEmpty()) {
             throw new IllegalArgumentException("The request list is empty");
         }else{
             lessonList = requestList.stream().map(lesson -> lessonMapper.lessonRequestToLesson(lesson)).toList();
         }
-        this.lessonRepository.saveAll(lessonList);
+        return this.lessonRepository.saveAll(lessonList);
     }
 }

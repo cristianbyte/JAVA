@@ -1,6 +1,7 @@
 package com.cristianbyte.learnify.infraestructure.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,7 +13,9 @@ import com.cristianbyte.learnify.api.dto.request.CourseRequest;
 import com.cristianbyte.learnify.api.dto.request.LessonRequest;
 import com.cristianbyte.learnify.api.dto.response.CourseResponse;
 import com.cristianbyte.learnify.api.mapper.CourseMapper;
+import com.cristianbyte.learnify.api.mapper.LessonMapper;
 import com.cristianbyte.learnify.domain.entities.Course;
+import com.cristianbyte.learnify.domain.entities.Lesson;
 import com.cristianbyte.learnify.domain.entities.User;
 import com.cristianbyte.learnify.domain.repositories.CourseRepository;
 import com.cristianbyte.learnify.infraestructure.abstract_service.ICourseService;
@@ -37,6 +40,9 @@ public class CourseService implements ICourseService{
 
     @Autowired
     private final ILessonService ilessonService;
+
+    @Autowired
+    private final LessonMapper lessonMapper;
 
     @Autowired
     private final EmailHelper emailHelper;
@@ -66,7 +72,12 @@ public class CourseService implements ICourseService{
         List<LessonRequest> lessonList = request.getLessons();
         //set the course_id for each lesson:
         lessonList.forEach(lesson -> lesson.setCourse_id(courseResponse.getId()));
-        this.ilessonService.saveAll(lessonList);
+        List<Lesson> lessons = this.ilessonService.saveAll(lessonList);
+        
+        // map lessons
+        courseResponse.setLessons(lessons.stream().map(lesson -> this.lessonMapper.lessonToLessonResponse(lesson)).collect(Collectors.toList()));
+
+        newCourse.setLessons(lessons);
         //send email to the teacher:
         emailHelper.sendMail(teacher.getEmail() , teacher.getFullname(), newCourse.getName());
 
