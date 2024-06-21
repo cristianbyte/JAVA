@@ -6,8 +6,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.workshop.library.api.dto.request.BookRequest;
+import com.workshop.library.api.dto.response.BookOnlyReservations;
 import com.workshop.library.api.dto.response.BookResponse;
-import com.workshop.library.api.dto.response.BookResponseFull;
 import com.workshop.library.domain.entities.Book;
 import com.workshop.library.domain.repositories.BookRepository;
 import com.workshop.library.infrastructure.abstract_services.IBookService;
@@ -72,9 +72,8 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public BookResponseFull getBookLoans(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getBookLoans'");
+    public BookOnlyReservations getOnlyReservations(Long id) {
+        return this.bookMapper.bookToOnlyReservations(this.find(id));
     }
 
 }

@@ -1,11 +1,14 @@
 package com.workshop.library.utils.mappers;
 
 import com.workshop.library.api.dto.request.BookRequest;
+import com.workshop.library.api.dto.response.BookOnlyReservations;
 import com.workshop.library.api.dto.response.BookResponse;
 import com.workshop.library.api.dto.response.BookResponseFull;
 import com.workshop.library.api.dto.response.LoanResponse;
+import com.workshop.library.api.dto.response.ReservationResponse;
 import com.workshop.library.domain.entities.Book;
 import com.workshop.library.domain.entities.Loan;
+import com.workshop.library.domain.entities.Reservation;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -13,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-21T12:51:57-0500",
+    date = "2024-06-21T13:34:51-0500",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.38.0.v20240524-2033, environment: Java 17.0.11 (Eclipse Adoptium)"
 )
 @Component
@@ -55,6 +58,19 @@ public class BookMapperImpl implements BookMapper {
     }
 
     @Override
+    public BookOnlyReservations bookToOnlyReservations(Book book) {
+        if ( book == null ) {
+            return null;
+        }
+
+        BookOnlyReservations.BookOnlyReservationsBuilder bookOnlyReservations = BookOnlyReservations.builder();
+
+        bookOnlyReservations.reservations( reservationListToReservationResponseList( book.getReservations() ) );
+
+        return bookOnlyReservations.build();
+    }
+
+    @Override
     public BookResponseFull BookToResponseFull(Book book) {
         if ( book == null ) {
             return null;
@@ -67,9 +83,38 @@ public class BookMapperImpl implements BookMapper {
         bookResponseFull.isbn( book.getIsbn() );
         bookResponseFull.loans( loanListToLoanResponseList( book.getLoans() ) );
         bookResponseFull.publicationYear( book.getPublicationYear() );
+        bookResponseFull.reservations( reservationListToReservationResponseList( book.getReservations() ) );
         bookResponseFull.title( book.getTitle() );
 
         return bookResponseFull.build();
+    }
+
+    protected ReservationResponse reservationToReservationResponse(Reservation reservation) {
+        if ( reservation == null ) {
+            return null;
+        }
+
+        ReservationResponse.ReservationResponseBuilder reservationResponse = ReservationResponse.builder();
+
+        reservationResponse.book( BookToResponse( reservation.getBook() ) );
+        reservationResponse.id( reservation.getId() );
+        reservationResponse.reservationDate( reservation.getReservationDate() );
+        reservationResponse.status( reservation.getStatus() );
+
+        return reservationResponse.build();
+    }
+
+    protected List<ReservationResponse> reservationListToReservationResponseList(List<Reservation> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<ReservationResponse> list1 = new ArrayList<ReservationResponse>( list.size() );
+        for ( Reservation reservation : list ) {
+            list1.add( reservationToReservationResponse( reservation ) );
+        }
+
+        return list1;
     }
 
     protected LoanResponse loanToLoanResponse(Loan loan) {

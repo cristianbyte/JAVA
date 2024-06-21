@@ -8,6 +8,8 @@ import com.workshop.library.api.dto.response.LoanResponse;
 import com.workshop.library.domain.entities.Loan;
 import com.workshop.library.domain.repositories.LoanRepository;
 import com.workshop.library.infrastructure.abstract_services.ILoanService;
+import com.workshop.library.utils.enums.exceptions.BadRequestException;
+import com.workshop.library.utils.enums.message.ErrorMessage;
 import com.workshop.library.utils.mappers.LoanMapper;
 
 import lombok.AllArgsConstructor;
@@ -48,6 +50,6 @@ public class LoanService implements ILoanService{
     }
 
     private Loan find(Long id){
-        return this.loanRepository.findById(id).orElseThrow();
+        return this.loanRepository.findById(id).orElseThrow(() -> new BadRequestException(ErrorMessage.idNotFound("loan")));
     }
 }

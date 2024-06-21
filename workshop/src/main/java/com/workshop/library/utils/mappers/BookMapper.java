@@ -5,6 +5,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import com.workshop.library.api.dto.request.BookRequest;
+import com.workshop.library.api.dto.response.BookOnlyReservations;
 import com.workshop.library.api.dto.response.BookResponse;
 import com.workshop.library.api.dto.response.BookResponseFull;
 import com.workshop.library.domain.entities.Book;
@@ -18,6 +19,8 @@ public interface BookMapper {
     Book RequestToBook(BookRequest bookRequest);
 
     BookResponse BookToResponse(Book book);
+
+    BookOnlyReservations bookToOnlyReservations(Book book);
 
     BookResponseFull BookToResponseFull(Book book);
 

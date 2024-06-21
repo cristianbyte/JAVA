@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.workshop.library.api.dto.request.UserRequest;
+import com.workshop.library.api.dto.response.UserOnlyLoans;
+import com.workshop.library.api.dto.response.UserOnlyReservations;
 import com.workshop.library.api.dto.response.UserResponseFull;
 import com.workshop.library.infrastructure.abstract_services.IUserService;
 
@@ -27,6 +29,16 @@ public class UserController {
     @GetMapping(path = "/{id}")
     public ResponseEntity<UserResponseFull> get(@PathVariable(name = "id") Long id){
         return ResponseEntity.ok(this.userService.getById(id));
+    }
+
+    @GetMapping(path = "/{id}/loans")
+    public ResponseEntity<UserOnlyLoans> getOnlyLoans(@PathVariable(name = "id") Long id){
+        return ResponseEntity.ok(this.userService.getUserLoans(id));
+    }
+
+    @GetMapping(path = "/{id}/reservations")
+    public ResponseEntity<UserOnlyReservations> getOnlyReservations(@PathVariable(name = "id") Long id){
+        return ResponseEntity.ok(this.userService.getUserReservations(id));
     }
 
     @PostMapping

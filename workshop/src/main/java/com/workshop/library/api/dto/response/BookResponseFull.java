@@ -18,6 +18,6 @@ public class BookResponseFull {
     private int publicationYear;
     private String genre;
     private String isbn;
-    //private List<ReservationResponse> reservations;
+    private List<ReservationResponse> reservations;
     private List<LoanResponse> loans;
 }

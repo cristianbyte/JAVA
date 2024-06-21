@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.workshop.library.api.dto.request.BookRequest;
+import com.workshop.library.api.dto.response.BookOnlyReservations;
 import com.workshop.library.api.dto.response.BookResponse;
 import com.workshop.library.infrastructure.abstract_services.IBookService;
 
@@ -34,6 +35,11 @@ public class BookController {
         @RequestParam(defaultValue = "10") int size) {
 
         return ResponseEntity.ok(this.bookService.getAll(page - 1, size));
+    }
+
+    @GetMapping(path = "/{id}/reservations")
+    public ResponseEntity<BookOnlyReservations> getOnlyReservations(@PathVariable(name = "id") Long id) {
+        return ResponseEntity.ok(this.bookService.getOnlyReservations(id));
     }
 
     @GetMapping(path = "/{id}")
